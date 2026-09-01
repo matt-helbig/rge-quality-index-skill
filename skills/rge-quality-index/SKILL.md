@@ -470,7 +470,7 @@ Gold standard: "Invisible personalization" — emails where personalization read
 
 **Preference management**: A preference center linked from the footer — topic, frequency, or format choice instead of binary subscribe/unsubscribe — is a lifecycle sophistication signal. Credit it when it's visible in the email.
 
-**Program-level signals**: Campaign-to-flow revenue balance, onboarding sequence length, send cadence discipline, and seasonal calendar ownership are diagnostics for a *program*, not an email. They live in `references/program-maturity.md`. Load it only when you actually have that context — a program audit or multi-email teardown. Scoring a single email, apply the incomplete-observability default of 3.0 and note the assumption. Never infer program maturity from one send.
+**Program-level signals**: Campaign-to-flow revenue balance, onboarding sequence length, send cadence discipline, and seasonal calendar ownership are diagnostics for a *program*, not an email. They live in `references/program-maturity.md`. Load it only when you actually have that context — a program audit or multi-email teardown. Scoring a single email, fall through to the incomplete-observability default above. Never infer program maturity from one send.
 
 **Data-highlight formats** (year-in-review, usage recaps, progress summaries): Score high on personalization and behavioral leverage when the data earns its place. Key question: is the data genuinely surprising or useful to *this* recipient, or is it filler dressed up as personalization?
 
