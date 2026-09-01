@@ -67,6 +67,17 @@ The usable range is roughly 3.0 to 4.8 — a 1.7-point window, which is why the
 framework cares about tenths. A 0.1 gap is one real deduction. A 0.3 gap
 crosses a band and should be easy to articulate out loud.
 
+## What It Doesn't Do
+
+The framework verifies **mechanics, not sufficiency**. Where a requirement varies
+by jurisdiction, industry, or ESP, it scores whether the element is present,
+prominent, and functional — it does not certify conformance. A scored footer
+means the unsubscribe works and is findable, not that the email is CAN-SPAM,
+CASL, or GDPR compliant.
+
+Deliverability (SPF/DKIM/DMARC, reputation, inbox placement) and ESP campaign
+configuration are outside the five pillars by design.
+
 ---
 
 ## Install

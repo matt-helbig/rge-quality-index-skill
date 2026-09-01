@@ -20,6 +20,18 @@ A structured scoring framework for evaluating marketing email quality. Balances 
 - Providing structured feedback on email campaigns
 - Training reviewers on what "good" looks like in email
 
+### What This Skill Does Not Rule On
+
+**Verify mechanics, not sufficiency.** Where a requirement varies by country, industry, jurisdiction, or ESP — compliance wording, the applicable accessibility standard, consent language, the must-support client list — this framework does not rule on legal or regulatory *sufficiency*. It scores whether the element is **present, prominent, and functional**. A scored footer signal means the unsubscribe works and is findable, not that the email is CAN-SPAM, CASL, or GDPR compliant. Capture jurisdiction-specific requirements separately, up front, and keep the scoring pass generic.
+
+Also outside the five pillars:
+
+- **Deliverability** — SPF/DKIM/DMARC alignment, `List-Unsubscribe` headers, IP and domain reputation, spam scoring, inbox placement. QI scores the email as a designed artifact, not its authentication or routing.
+- **ESP campaign configuration** — audience, segmentation, send time, A/B setup, automation logic.
+- **Legal certification** — presence and function, never conformance.
+
+When a review touches one of these, note it and route it to the right owner rather than folding it into a pillar score.
+
 ---
 
 ## The Model
@@ -175,6 +187,7 @@ Measures visual structure and scroll control. Design supports the idea — not d
 - >2 animations: −0.2
 - Nav bar without metric justification: −0.2
 - Inconsistent font sizes across sections: −0.2
+- Auto-linked phone numbers, dates, or addresses rendering as blue underlined text: −0.2 (layout and palette break; the craft gap is scored in Pillar 2)
 - Variable CTA sizes within same email: −0.2
 - Ghost CTA as primary (no fill, no color): −0.3; unclear secondary ghost: −0.2
 - Pill shapes used as non-clickable section labels: −0.2
@@ -228,11 +241,21 @@ Measures execution quality, usability, and inclusiveness. Craft is non-negotiabl
 | **Text discipline** | Left-aligned body, short paragraphs | Centered walls of text |
 | **Alt text** | Appropriate by image type, empty on decorative | Missing or generic on everything |
 | **Dark mode** | Backgrounds invert, text legible, element definition preserved | Invisible text, broken backgrounds |
-| **Footer** | Unsub prominent, postal address present | Unsub buried, wall of fine print |
+| **Footer** | Unsub prominent and functional, postal address present | Unsub buried, wall of fine print |
 | **Line height** | Consistent, readable spacing throughout | Overlap or inconsistency across clients |
 | **Animation fallback** | First GIF frame is meaningful and legible | First frame blank or mid-transition |
 
+**Footer scoring is mechanical, not legal.** Score whether the unsubscribe is present, findable, and functional and whether the postal address is there. Do not score compliance conformance — requirements differ by jurisdiction and are out of scope. See What This Skill Does Not Rule On.
+
 **Mobile note:** Mobile readability and tap targets are scored here as usability concerns. Mobile layout and stacking are scored in Pillar 1. Both apply independently.
+
+**Dark mode — ask this first:** Is dark mode targeted at all? Check `<head>` for both opt-in metas: `<meta name="color-scheme" content="light dark">` and `<meta name="supported-color-schemes" content="light dark">`. The answer changes the scoring:
+
+- **Both present** — the email declares dark-mode support. Inversion failures are craft failures. Score them.
+- **Both absent** — dark mode was never targeted; clients will auto-handle it, usually by force-inverting. Note the gap, but deduct only where legibility actually breaks. Absence is a maturity signal, not a defect in itself.
+- **Only one present** — incomplete opt-in. The email is asking for behavior it hasn't fully declared. −0.1 as a craft-hygiene gap.
+
+**Fixed-dark vs. adaptive elements:** Distinguish elements that are *already dark and must render identically* (fixed-dark — typically a gradient rendered as a solid with a blend-mode wrap) from elements that are *light by default and deliberately invert* (adaptive — driven by a dark-mode class). The techniques are mutually exclusive. Mixing them on the same element is a craft failure that produces unpredictable results across clients: −0.2.
 
 **Dark mode — failure taxonomy:**
 - Dark logo on transparent background → vanishes in forced dark mode. Apply −0.3.
@@ -247,10 +270,17 @@ Measures execution quality, usability, and inclusiveness. Craft is non-negotiabl
 **Interactive email credit calibrates over time** — see Current-Era Calibration.
 
 **Technical hygiene:**
+- **Gmail clipping (~102 KB)**: Gmail truncates the message past roughly 102 KB of HTML and hides the remainder behind a "View entire message" link. What gets cut is the bottom of the email — footer, unsubscribe, postal address, and often the closing CTA — and tracking pixels below the cut never fire, so the send's own open data understates reality. Treat the budget as <90 KB.
+  - Over ~102 KB → −0.4 and flag as a structural failure. If the unsubscribe falls below the cut, treat it as absent and score the footer signal accordingly — that combination will usually pull this pillar under 3.0, which triggers the Accessibility Hard Cap on its own.
+  - 90–102 KB → −0.2, at risk. Any late-stage copy addition pushes it over.
+  - Bloat is usually the cause, not content: reflexive Outlook ghost tables, deep table nesting, inline styles pasted in from a document, unused CSS.
 - Single H1: Multiple H1s = structural confusion → −0.2
 - Language attribute (`lang="en"`): Missing = minor gap; deduct only when compounding other a11y issues
 - Mobile stacking order: CTA before value prop = structural failure
 - Illegible text or unusable tap targets at 320px → −0.3 (layout truncation/overlap at 320px is a Pillar 1 deduction — score the usability consequence here, the layout failure there)
+- **Character encoding**: Missing `<meta charset="utf-8">` risks mojibake — curly quotes, em dashes, accented characters, and emoji rendering as garbage after copy moves design → code → ESP. Missing declaration = −0.1; visible mojibake in the rendered email = −0.3.
+- **Auto-link suppression**: iOS and Gmail auto-detect phone numbers, dates, and addresses and re-render them as blue underlined links, overriding the type color and breaking layout. Suppression (`x-apple-data-detectors`, `#MessageViewBody`, `format-detection`) is basic craft when the email contains any of those content types. Absent and visibly firing → −0.2 here, plus the Pillar 1 layout deduction.
+- **Merge-tag fallbacks**: Every personalization token needs a default. "Hi ," or a raw `{{first_name}}` reaching the inbox is the most visible failure in email and it lands on the highest-attention line. Missing fallback on any token → −0.3. This is the mechanical counterpart to the personalization *strategy* scored in Pillar 5 — a well-targeted merge that renders empty still fails here.
 
 **Alt text by image type:**
 
@@ -808,3 +838,11 @@ The division of labor is strict: **the model judges, the pipeline calculates.**
 - **Modifier inflation**: without the justification requirement, courage bonuses hit ~35% of emails and lifecycle coherence ~48% — both implausible. Neutral must be the path of least resistance.
 - **Distribution drift**: batch-check outputs against the expected distribution in Score Bands. Top-heavy (>15% at 4.4+) means inflation; recalibrate anchors, not deductions.
 - **Fabricated strategy**: models invent journey context to avoid the 3.0 default. The `observability_default` field in pillar reasoning makes the assumption explicit and auditable.
+
+---
+
+## Acknowledgments
+
+The mechanical checks in Pillar 2's technical hygiene — Gmail's ~102 KB clipping threshold, the dark-mode opt-in metas, fixed-dark vs. adaptive element handling, auto-link suppression, charset/mojibake, and merge-tag fallbacks — were informed by [email-html-qa-skill](https://github.com/EmailBoutique-Digital-Inc/email-html-qa-skill) by EmailBoutique Digital Inc (MIT). The "verify mechanics, not sufficiency" scoping principle is theirs as well.
+
+That skill and this one do different jobs: it detects defects before send, this one grades quality after. They pair well.
