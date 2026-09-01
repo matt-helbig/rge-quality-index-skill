@@ -36,7 +36,7 @@ Cross-pillar signals that consistently separate good from great. An email hittin
 - **Personalization that earns trust**: Genuine first-party signal — quiz result, purchase history, usage data, consultation context — not just `{{first_name}}`
 - **Dark mode excellence with element outlining**: Borders, outlines, and layered treatments preserve legibility — not just background inversion
 - **Interactive CSS-based elements**: Functional, content-appropriate, with acceptable fallback
-- **Data visualization / wrapped format**: Personalized or aggregate data presented visually — rare and high-value
+- **Data visualization**: Personalized or aggregate data presented visually — high-value when the data is genuinely useful to this recipient
 - **Live text in fashion / luxury**: Genuinely rare in those categories — call it out explicitly
 - **Character-driven design at scale**: Mascot systems applied with visual discipline — unmistakably brand-specific
 - **Editorial typography as concept**: Type is the idea — oversized serifs, expressive display, deliberate pacing

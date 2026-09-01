@@ -115,7 +115,7 @@ Apply as judgment overlays when scores feel ambiguous. Read before scoring, not 
 
 **Email shouldn't look the same everywhere.** Designs that exploit rendering environments — dark mode, animation, hover states, live personalization — reward the medium. Treating email as a static image delivery system is a missed opportunity.
 
-**Humanity beats polish in the AI era.** As AI produces more email, the differentiator is genuine understanding of the subscriber's context — their specific problem, their behavioral moment, their relationship with the brand. An email that reads like it was written by someone who knows the reader beats a polished template every time. AI-generated imagery alone is not a deduction — flag for internal review only unless legibility or cohesion is affected.
+**Humanity beats polish.** The differentiator is genuine understanding of the subscriber's context — their specific problem, their behavioral moment, their relationship with the brand. An email that reads like it was written by someone who knows the reader beats a polished template every time. Production tooling is not the question; evidence of understanding is.
 
 ---
 
@@ -126,8 +126,9 @@ Apply as judgment overlays when scores feel ambiguous. Read before scoring, not 
 - **WCAG 2.1 AA is a legal requirement for US public entities** (DOJ ruling, effective April 2026). For government, higher-ed, and public-institution senders, accessibility failures carry regulatory risk on top of the standard scoring impact — flag in P5.
 - **Dark mode readiness is a baseline expectation, not an advanced skill.** Score negligence increasingly as a disqualifier, not a missed bonus.
 - **Interactive email techniques are expanding.** CSS/HTML spec updates keep raising the bar — what was exceptional in 2023 is approaching expected. Calibrate interactivity credit downward over time.
-- **Rounded corners are ubiquitous.** Not a distinctive positive on their own; what matters is how they combine with hierarchy and whitespace.
 - **All-image emails are on a trajectory toward automatic disqualification.** The mechanical rule (P2 ceiling of 2.9) reflects current strictness; expect it to tighten further.
+- **Generative tooling is now common in email production.** AI-generated imagery or copy is not a deduction in itself — judge the output, not its origin. Flag for internal review only when legibility, cohesion, or the AI Slop Indicators in P3 are triggered. As volume rises, the scarce signal is evidence the sender understands the reader; weight that accordingly.
+- **Visual trend inventory.** The trend elements currently common enough to be non-distinctive: rounded corners, wavy dividers, organic blob shapes, heavy gradients, oversized type. Repetition of any of these is scored in P1; which specific elements are ubiquitous is what changes — revisit this list, not the rule.
 
 ---
 
@@ -194,7 +195,7 @@ Measures visual structure and scroll control. Design supports the idea — not d
 - Ghost CTA as primary (no fill, no color): −0.3; unclear secondary ghost: −0.2
 - Pill shapes used as non-clickable section labels: −0.2
 - CTA placed too close to footer (criminal proximity): −0.2
-- Single trend element appearing 3+ times (wavy dividers, organic shapes, heavy gradients throughout): −0.2
+- Single trend element repeated 3+ times throughout: −0.2 (which elements currently count as trend rather than choice is listed in Current-Era Calibration)
 - All-caps as dominant typographic treatment: −0.2
 
 **Positive design signals:**
@@ -216,10 +217,9 @@ Measures visual structure and scroll control. Design supports the idea — not d
 - B2B product screenshots / dashboard visuals as primary hero ("show the product")
 - Hover effects on CTAs
 
-**Design trend nuance:**
-- **Rounded corners**: Ubiquitous (see Current-Era Calibration) — not a distinctive positive on its own. Matters how they combine with hierarchy and whitespace.
-- **Gradients**: Positive as depth accent; neutral-to-negative when gradient is the entire strategy.
-- **Product photography as hero**: Positive when the image does conceptual work and copy is disciplined. Strong image + weak copy: don't compensate.
+**Trend elements — the general rule:** A widely-adopted visual treatment is not a distinctive positive on its own. What earns credit is how it combines with hierarchy and whitespace. A treatment used as an accent is positive; the same treatment used as the entire design strategy is neutral-to-negative. See Current-Era Calibration for which treatments are currently ubiquitous.
+
+**Product photography as hero**: Positive when the image does conceptual work and copy is disciplined. Strong image + weak copy: don't compensate.
 
 **The "cover the logo" test**: If brand can't be identified with the logo hidden, the email fails cohesion → Interchangeability Cap (×0.95, final ≤4.2).
 
@@ -426,7 +426,7 @@ Scores what the email makes you do. How it sounds is Pillar 3. Psychological pre
 - First-name substitution: Table stakes — neither adds nor subtracts
 - Behavioral personalization (specific viewed items, quiz results, usage data, consultation context): Meaningful lift
 - Personalized data visualization (wrapped formats, progress summaries, account milestones): High-value — credit generously
-- Personalized GIF / dynamic visual (recipient-specific animation using behavioral data): Current ceiling — extremely rare, evaluate on: (a) does the personalization feel natural vs. gimmicky, (b) is GIF weight acceptable, (c) is it genuinely delightful or merely mechanical
+- Personalized GIF / dynamic visual (recipient-specific animation using behavioral data): The most technically demanding tier. Evaluate on: (a) does the personalization feel natural vs. gimmicky, (b) is GIF weight acceptable, (c) is it genuinely delightful or merely mechanical
 
 Gold standard: "Invisible personalization" — emails where personalization reads like a human colleague wrote it based on real knowledge of the recipient.
 
@@ -459,7 +459,7 @@ Gold standard: "Invisible personalization" — emails where personalization read
 **Campaign strategy benchmarks** (from observed scoring data):
 - Educational / value-first (guides, research, behind-the-scenes): avg ~3.4
 - Discount-led (discount as primary concept): avg ~3.0
-- Authority-positioning (surveys, benchmarks, clinical proof, expert positioning): Largest emerging campaign type — positive signal when credibility is substantiated, not just asserted
+- Authority-positioning (surveys, benchmarks, clinical proof, expert positioning): Positive signal when credibility is substantiated, not just asserted
 - Founder / transparency campaigns: Score well on P3 (voice) and P5 (relational positioning) when voice is genuine
 - Personalization / consultation flows: One of the few campaign types where strategy and design quality visibly reinforce each other
 - Discount alone = table stakes. Discount earned through trigger logic (consultation abandonment, browse signal) = strategic positive
@@ -472,7 +472,7 @@ Gold standard: "Invisible personalization" — emails where personalization read
 
 **Program-level signals**: Campaign-to-flow revenue balance, onboarding sequence length, send cadence discipline, and seasonal calendar ownership are diagnostics for a *program*, not an email. They live in `references/program-maturity.md`. Load it only when you actually have that context — a program audit or multi-email teardown. Scoring a single email, apply the incomplete-observability default of 3.0 and note the assumption. Never infer program maturity from one send.
 
-**Wrapped / data-highlight formats**: Quarterly and monthly wrapped formats scoring high on personalization and behavioral leverage. Key question: is the data genuinely surprising or useful, or is it filler dressed up as personalization?
+**Data-highlight formats** (year-in-review, usage recaps, progress summaries): Score high on personalization and behavioral leverage when the data earns its place. Key question: is the data genuinely surprising or useful to *this* recipient, or is it filler dressed up as personalization?
 
 ---
 

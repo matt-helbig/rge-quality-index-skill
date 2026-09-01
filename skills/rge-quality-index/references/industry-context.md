@@ -2,7 +2,7 @@
 
 Load this file when the email's industry is identifiable. Apply as contextual judgment on top of the core rubric — industry context adjusts expectations, never the formula.
 
-**SaaS / B2B**: Screenshot-heavy product-forward design is the emerging standard — "show the product, not just the promise." Product UI, in-context dashboards, and feature demos earn Strategy credit over abstract hero imagery. Authority-as-differentiator (surveys, benchmarks, research) is the largest growing campaign type. Expert audiences require copy that trusts the reader — hype is a deduction.
+**SaaS / B2B**: Screenshot-heavy product-forward design is the norm — "show the product, not just the promise." Product UI, in-context dashboards, and feature demos earn Strategy credit over abstract hero imagery. Authority-as-differentiator (surveys, benchmarks, research) is the largest growing campaign type. Expert audiences require copy that trusts the reader — hype is a deduction.
 
 **E-commerce / Retail**: High-SKU density is not a deduction — apply Retail Density Safeguard. Product photography as hero is increasingly expected. Personalized recommendations and browse/cart abandonment trigger logic are where strategic lift happens.
 
