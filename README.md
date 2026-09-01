@@ -101,7 +101,8 @@ skills/rge-quality-index/
 ├── SKILL.md                        the framework
 ├── references/
 │   ├── patterns.md                 rejection patterns + what pushes an email past 4.1
-│   └── industry-context.md         design norms by vertical
+│   ├── industry-context.md         design norms by vertical
+│   └── program-maturity.md         program-level diagnostics (load only with context)
 └── scripts/
     └── calculate_final.py          deterministic scorer
 ```

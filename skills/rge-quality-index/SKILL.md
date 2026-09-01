@@ -7,7 +7,7 @@ description: Use when evaluating email design quality, scoring email submissions
 
 **Not just pretty. Persuasive.**
 
-A structured scoring framework for evaluating marketing email quality. Balances editorial excellence (60%) with performance intelligence (40%) through five weighted pillars, four modifiers, and four caps/gates.
+A structured scoring framework for evaluating marketing email quality. Balances editorial excellence (65%) with performance intelligence (35%) through five weighted pillars, four modifiers, and four caps/gates.
 
 ---
 
@@ -38,8 +38,10 @@ When a review touches one of these, note it and route it to the right owner rath
 
 ### Two Lenses
 
-**60% Editorial Excellence** — Is this email worth archiving, studying, or presenting on stage?
-**40% Performance Intelligence** — Does this email intelligently drive behavior, revenue, or retention?
+**65% Editorial Excellence** (Pillars 1–3) — Is this email worth archiving, studying, or presenting on stage?
+**35% Performance Intelligence** (Pillars 4–5) — Does this email intelligently drive behavior, revenue, or retention?
+
+The split shifts with email type. Transactional weighting pushes editorial to 70% and performance to 30%, because the action is already done. Lifecycle pushes performance to 40%, because the email exists to move someone.
 
 ### Five Pillars (scored 1.0–5.0, weighted)
 
@@ -452,8 +454,6 @@ Gold standard: "Invisible personalization" — emails where personalization read
 
 **Language-to-audience mismatch**: Brand-preferred terminology instead of customer language = strategic positioning failure (flag in P5) and copy voice failure (flag in P3).
 
-**Onboarding sequence length**: Best practice is 3–5 emails. 9+ emails = over-engineering and likely fatigue. Score the individual email on its own merits; note the strategic concern.
-
 **Trigger logic**: Does the triggered email make sense for the moment? An email that works equally well as batch-and-blast is strategically weak as a triggered send. Timing is often more impactful than copy perfection — a well-timed triggered email earns Strategy credit even with imperfect copy. An untimed blast with excellent copy still gets penalized.
 
 **Campaign strategy benchmarks** (from observed scoring data):
@@ -466,11 +466,11 @@ Gold standard: "Invisible personalization" — emails where personalization read
 
 **Email as a cross-functional signal**: Messaging that resonates in email should inform landing pages, ads, and product copy. When an email demonstrates awareness of this loop — tight subject line → hero payoff → CTA → landing page alignment — score generously on Strategy.
 
-**Lifecycle program maturity signals** (apply when context is available):
-- 50/50 campaign-to-flow ratio: Best-practice programs balance ~50% campaign revenue with ~50% flow revenue. Heavy campaign skew = lifecycle immaturity.
-- Micro-seasonal vs. macro-seasonal: Brands anchored to ownable micro-moments score better on distinctiveness and Strategy than brands running the standard promotional calendar. Macro-seasonal without genuine brand angle = low Strategy. Does the seasonal hook have a real connection to the brand's purpose, or is it a theme with no content substance?
-- Preference management as maturity marker: Programs that offer topic/frequency/format choice instead of binary subscribe/unsubscribe demonstrate lifecycle sophistication. Credit when built into the email.
-- Loyalty without noise: Fewer emails at higher relevance is a counter-trend to volume-based lifecycle marketing. Credit programs that clearly prioritize engagement quality over send frequency when that context is identifiable.
+**Seasonal hook**: Does the seasonal angle connect to the brand's actual purpose, or is it a theme applied to unrelated content? Macro-seasonal with no genuine brand angle = low Strategy.
+
+**Preference management**: A preference center linked from the footer — topic, frequency, or format choice instead of binary subscribe/unsubscribe — is a lifecycle sophistication signal. Credit it when it's visible in the email.
+
+**Program-level signals**: Campaign-to-flow revenue balance, onboarding sequence length, send cadence discipline, and seasonal calendar ownership are diagnostics for a *program*, not an email. They live in `references/program-maturity.md`. Load it only when you actually have that context — a program audit or multi-email teardown. Scoring a single email, apply the incomplete-observability default of 3.0 and note the assumption. Never infer program maturity from one send.
 
 **Wrapped / data-highlight formats**: Quarterly and monthly wrapped formats scoring high on personalization and behavioral leverage. Key question: is the data genuinely surprising or useful, or is it filler dressed up as personalization?
 
