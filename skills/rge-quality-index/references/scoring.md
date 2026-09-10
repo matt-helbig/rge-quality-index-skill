@@ -36,6 +36,14 @@ Apply adjusted weights when the email type is clearly not promotional. Default t
 
 The criteria change with the job as well as the weights; use the type table in [SKILL.md](../SKILL.md). For a receipt, reassurance and comprehension may complete the task. For a password reset, a clear next action remains essential. Neither needs an upsell to earn a strong score.
 
+### Unobserved strategy is removed, not averaged in
+
+When P5 cannot be established, it takes the 3.0 observability default and `observability_default` is set. The calculator then **drops strategy from the weighted sum and rescales the four observed pillars to sum to 1.0**, rather than blending a constant into every score.
+
+This matters because strategy is unobservable in most gallery reviews. Averaging in 3.0 pulls every strong email down and every weak one up, which contradicts the rule that missing evidence is not a deduction — an email with 4.5 craft across the observed pillars used to land at 4.27 purely because nobody supplied journey context. Renormalizing also removes the incentive to invent strategic intent to escape the drag.
+
+An *observed* weak strategy is different and carries its full weight. The default applies only when there was nothing to judge.
+
 ### Final Score Formula
 
 ```
@@ -54,7 +62,7 @@ Step 3: Cap & Gate Enforcement (applied in order)
 
 **Modifier math:** Distinctiveness multiplies by 0.95 / 1.00 / 1.05. Lifecycle multiplies by 1.00–1.05. Courage and Screenshot are raw additions (+0.00–0.30 and +0.00–0.20).
 
-**Implementation note:** Use the deterministic calculator for arithmetic and numeric caps. Local execution is sufficient; no server is required. The model supplies judgments and evidence, then makes the separate editorial assessment described in [output.md](output.md).
+**Implementation note:** Use the deterministic calculator for arithmetic and numeric caps. Local execution is sufficient; no server is required. The model supplies judgments and evidence, then makes the separate editorial assessment described in [output.md](output.md). For prompting order, guardrail rationale, and batch monitoring, read [implementation.md](implementation.md).
 
 ## Modifiers
 
@@ -127,17 +135,19 @@ Both conditions carry the same evidence burden as a non-default modifier. Record
 
 ## Score Bands
 
-| Score | Label | Meaning |
-|-------|-------|---------|
-| 4.7+ | Exceptional | Category-shifting, structurally innovative. Rare. |
-| 4.4–4.6 | Elevated | Distinctive, psychologically sharp, ownable |
-| 4.1–4.3 | Teachable | Disciplined, strategically sound, worth studying |
-| 3.8–4.0 | Strong | Good execution, limited conceptual lift |
-| 3.5–3.7 | Competent | Competent but diluted or generic |
-| 3.0–3.4 | Below | Functional, cluttered, or strategically weak |
-| <3.0 | Reject | Significant problems across multiple pillars |
+| Score | Label | External tier | Meaning |
+|-------|-------|---------------|---------|
+| 4.5+ | Exceptional | Gallery-Worthy | Category-shifting, structurally innovative. Rare. |
+| 4.0–4.4 | Teachable | Strong | Disciplined, strategically sound, worth studying |
+| 3.5–3.9 | Competent | Fair | Sound execution, diluted or limited conceptual lift |
+| 3.0–3.4 | Below | Needs Work | Functional, cluttered, or strategically weak |
+| <3.0 | Reject | Not Ready | Significant problems across multiple pillars |
 
-Use lower-inclusive bands: 3.0 ≤ score <3.5, 3.5 ≤ score <3.8, and so on. A small decimal difference is not evidence of a meaningful editorial difference by itself. Explain the specific gap when comparing emails.
+Bands are half a point wide and lower-inclusive: 3.0 ≤ score <3.5, 3.5 ≤ score <4.0, and so on. Narrower bands implied a precision this rubric does not have — a 0.1 gap is not evidence of an editorial difference. When comparing two emails, explain the specific gap rather than pointing at the numbers.
+
+Two boundaries are load-bearing. The accessibility cap (3.4) sits at the top of **Below / Needs Work**, so a capped email cannot read as acceptable. The CFO clamp (4.4) sits at the top of **Teachable / Strong**, so failing that gate visibly costs the top band.
+
+**Deduction floor**: within a single pillar, deductions may total no more than −1.2, enforced by the calculator. Stacking past it means the anchor was too high. See the tiers at the top of [rubric.md](rubric.md).
 
 **Calibration rule**: If two scorers disagree by >0.3, compare pillar scores to find the divergence. Compare evidence, anchors, deductions, type selection, and modifiers before changing weights.
 

@@ -18,7 +18,9 @@ Positive evidence sets the anchors; the specified defects are reserved for itemi
 
 Ownable ×1.00, lifecycle ×1.00, courage +0.00, screenshot +0.10 for the subject's memorable voice. The screenshot observation is one specific saveable moment, not proof of exceptional overall execution.
 
-Weighted craft = 3.54; final = **3.64**, Competent / Fair. No numeric cap applies. Passing the distinctiveness gate does not establish gallery merit. With the essential offer missing in the images-off experience, the review should flag that blocker before recommending a feature. Strategy is **Not verified** externally.
+Strategy is unobserved, so it carries `observability_default` and drops out of the weighted sum; the four observed pillars rescale to sum to 1.0. Weighted craft = 3.63; final = **3.73**, Competent / Fair. No numeric cap applies. Passing the distinctiveness gate does not establish gallery merit. With the essential offer missing in the images-off experience, the review should flag that blocker before recommending a feature. Strategy is **Not verified** externally.
+
+Note what renormalization does not do: it does not reward the missing evidence. The observed craft is what it is, and the review still has to say that journey context was never supplied.
 
 The runnable input is [../tests/fixtures/skincare.json](../tests/fixtures/skincare.json). The automated test checks its result, not whether every real skincare launch deserves the same anchors.
 

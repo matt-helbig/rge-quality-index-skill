@@ -56,7 +56,9 @@ skills/rge-quality-index/
 │   ├── output.md            scoring input and curator/sender output contract
 │   ├── examples.md          worked score and contrasting editorial cases
 │   ├── industry-context.md  audience and category interpretation
-│   ├── patterns.md          optional cross-pillar review prompts
+│   ├── patterns.md          cross-pillar compound patterns
+│   ├── calibration.md       claims that depend on current practice
+│   ├── implementation.md    prompting order and guardrail rationale
 │   └── program-maturity.md  program context when evidence exists
 ├── scripts/
 │   └── calculate_final.py   deterministic score calculation
@@ -71,14 +73,19 @@ The model supplies pillar judgments and evidence. The Python script validates nu
 
 ```bash
 python skills/rge-quality-index/scripts/calculate_final.py scored.json --external
+python skills/rge-quality-index/scripts/calculate_final.py scored.json --audience=sender
 python -m unittest discover -s skills/rge-quality-index/tests -v
 ```
 
-The [input contract](skills/rge-quality-index/references/output.md) includes CFO-gate inputs and a valid JSON example. The [worked fixture](skills/rge-quality-index/tests/fixtures/skincare.json) produces 3.64 / Competent / Fair.
+The [input contract](skills/rge-quality-index/references/output.md) includes CFO-gate inputs and a valid JSON example. The [worked fixture](skills/rge-quality-index/tests/fixtures/skincare.json) produces 3.73 / Competent / Fair.
 
 Calculation details relevant to existing integrations:
 
 - `SKILL.md` now routes to reference files. Agents need access to the whole skill folder. An application that sends only `SKILL.md` to a model without file tools must also include `rubric.md`, `scoring.md`, and `output.md` in a full-review prompt, plus relevant industry/program context. Do not deploy that loader unchanged after this restructuring.
+- **Scores shift with this version.** Unobserved strategy is now renormalized away instead of averaged in, the bands are half-point wide, and two double-deduction rules were narrowed. Historical scores are not comparable to new ones. See [CHANGELOG.md](CHANGELOG.md) before reconciling stored grades.
+- When P5 carries `observability_default`, the calculator drops strategy from the weighted sum and rescales the four observed pillars to sum to 1.0, so missing journey context neither raises nor lowers the result. Observed strategy carries its full weight.
+- Deductions within one pillar may total no more than −1.2. Past that the object is rejected, on the principle that stacking means the anchor was wrong.
+- `--audience=sender` emits only qualitative labels — no scores, anchors, deductions, or modifiers. Prefer it over hand-selecting fields from the internal object.
 - Numeric strings, booleans used as scores, out-of-range values, unknown modifier tiers, and inconsistent supplied pillar arithmetic fail validation.
 - Legacy objects without pillar reasoning remain accepted with a warning. New skill runs include full reasoning.
 - CFO-gate inputs are enforced, not merely documented. Claiming `cfo_metric_impact` requires a `cfo_metric_hypothesis`, and `cfo_criteria_met` may not exceed the distinct criteria documented in `cfo_criteria_evidence`, whose names must match the six in `scoring.md`. A stored object that claimed the gate without recording its evidence now fails validation; either document the claim or drop it. Objects that never claimed the gate are unaffected.

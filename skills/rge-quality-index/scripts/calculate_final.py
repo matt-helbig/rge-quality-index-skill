@@ -10,6 +10,7 @@ Usage:
     python calculate_final.py input.json            # completed object to stdout
     cat input.json | python calculate_final.py      # same, via stdin
     python calculate_final.py input.json --external # also emit external labels
+    python calculate_final.py input.json --audience=sender  # qualitative labels only
 
 Input: the internal scoring object (see references/output.md). Fields computed by
 this script (weighted_craft_score, calculated_final_score, caps_applied, band,
@@ -31,11 +32,10 @@ WEIGHTS = {
 
 DISTINCTIVENESS = {"interchangeable": 0.95, "ownable": 1.00, "forward": 1.05}
 
+# Half-point bands. Finer slicing implied precision the rubric does not have.
 BANDS = [
-    (4.7, "Exceptional", "Gallery-Worthy"),
-    (4.4, "Elevated", "Excellent"),
-    (4.1, "Teachable", "Strong"),
-    (3.8, "Strong", "Good"),
+    (4.5, "Exceptional", "Gallery-Worthy"),
+    (4.0, "Teachable", "Strong"),
     (3.5, "Competent", "Fair"),
     (3.0, "Below", "Needs Work"),
     (0.0, "Reject", "Not Ready"),
@@ -48,6 +48,7 @@ PILLAR_LABELS = [
 
 PILLARS = ["design", "accessibility", "copy", "behavioral", "strategy"]
 
+DEDUCTION_FLOOR = -1.2
 FORWARD_CRAFT_FLOOR = 3.8
 COURAGE_CRAFT_FLOOR = 3.8
 ALL_IMAGE_A11Y_CEILING = 2.9
@@ -156,8 +157,16 @@ def validate(obj, errors, warnings):
                    for d in deductions):
                 errors.append(f"deductions for '{p}' require a named rule and negative numeric value in tenths")
                 continue
-            computed = max(Decimal("1"), min(Decimal("5"),
-                decimal(anchor) + sum((decimal(d["value"]) for d in deductions), Decimal("0"))))
+            total = sum((decimal(d["value"]) for d in deductions), Decimal("0"))
+            if total < decimal(DEDUCTION_FLOOR):
+                # Stacking past the floor means the anchor was wrong, not that
+                # the email is worse. Lower the anchor instead.
+                errors.append(
+                    f"deductions for '{p}' total {total}, past the {DEDUCTION_FLOOR} "
+                    "per-pillar floor; lower the anchor rather than stacking"
+                )
+                continue
+            computed = max(Decimal("1"), min(Decimal("5"), decimal(anchor) + total))
             reported = scores.get(p)
             if number(reported, 1.0, 5.0, tenths=True):
                 # Accept a completed all-image object whose effective score was clamped.
@@ -232,13 +241,26 @@ def calculate(obj):
         scores["accessibility"] = decimal(ALL_IMAGE_A11Y_CEILING)
         caps.append("All-Image A11y Ceiling (pillar clamped to 2.9)")
 
-    weights = WEIGHTS[email_type]
-    craft = sum(scores[p] * decimal(weights[p]) for p in PILLARS)
+    # An unobservable P5 must not act as a constant that drags every score
+    # toward 3.0. Drop it and rescale the observed pillars to sum to 1.0.
+    weights = {p: decimal(w) for p, w in WEIGHTS[email_type].items()}
+    renormalized = obj.get("pillar_reasoning", {}).get("strategy", {}).get("observability_default") is True
+    scored = [p for p in PILLARS if not (renormalized and p == "strategy")]
+    craft = sum(scores[p] * weights[p] for p in scored)
+    if renormalized:
+        # Divide once by the observed weight rather than rescaling each weight,
+        # which would leave the parts summing to just under 1 and floor low.
+        craft /= sum(weights[p] for p in scored)
+        warnings.append(
+            "Strategy unobserved: weights renormalized across the four observed pillars"
+        )
 
     # distinctiveness with Forward craft floor
     tier = m.get("distinctiveness_tier", "ownable")
+    downgraded = False
     if tier == "forward" and craft < decimal(FORWARD_CRAFT_FLOOR):
         tier = "ownable"
+        downgraded = True
         warnings.append(
             f"Forward tier downgraded to Ownable: weighted craft {craft:.2f} below {FORWARD_CRAFT_FLOOR} floor"
         )
@@ -280,7 +302,11 @@ def calculate(obj):
     result["email_type"] = email_type
     result["pillar_scores"] = {p: float(v) for p, v in scores.items()}
     result["modifiers"] = {**m, "distinctiveness_tier": tier}
-    result["weighted_craft_score"] = float(round(craft, 2))
+    if downgraded:
+        # The Forward rationale no longer describes the applied tier.
+        result["modifiers"]["distinctiveness_justification"] = None
+    result["weights_renormalized"] = renormalized
+    result["weighted_craft_score"] = float(craft.quantize(Decimal("0.01"), rounding=ROUND_FLOOR))
     result["calculated_final_score"] = float(final)
     result["caps_applied"] = caps
     result["band"] = band
@@ -298,8 +324,30 @@ def calculate(obj):
     return result
 
 
+def sender_view(result):
+    """Only what a sender should see: qualitative labels, no internal math."""
+    if not result.get("valid"):
+        return {"valid": False, "errors": result.get("errors", [])}
+    external = result.get("_external", {})
+    return {
+        "valid": True,
+        "tier": external.get("tier"),
+        "pillar_labels": external.get("pillar_labels", {}),
+    }
+
+
 def main():
+    flags = [a for a in sys.argv[1:] if a.startswith("--")]
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
+    audience = "internal"
+    for flag in flags:
+        if flag.startswith("--audience="):
+            audience = flag.split("=", 1)[1]
+    if audience not in ("internal", "sender"):
+        json.dump({"valid": False, "errors": [f"unknown audience: {audience}"]},
+                  sys.stdout, indent=2)
+        print()
+        sys.exit(1)
     try:
         if args:
             with open(args[0], encoding="utf-8") as source:
@@ -312,7 +360,9 @@ def main():
         result = calculate(obj)
     except (OSError, ValueError) as exc:
         result = {"valid": False, "errors": [str(exc)], "warnings": []}
-    if "--external" not in sys.argv:
+    if audience == "sender":
+        result = sender_view(result)
+    elif "--external" not in flags:
         result.pop("_external", None)
     json.dump(result, sys.stdout, indent=2, ensure_ascii=False)
     print()

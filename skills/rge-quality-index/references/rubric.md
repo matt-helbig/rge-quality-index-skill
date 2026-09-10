@@ -1,5 +1,17 @@
 # Five-pillar rubric
 
+## Deduction tiers
+
+Every deduction below is one of three values, so a new rule can be placed consistently:
+
+| Tier | Value | Means |
+|---|---:|---|
+| Minor | −0.2 | A noticeable lapse that a reader works around. |
+| Notable | −0.3 | A real obstacle to reading, acting, or trusting the email. |
+| Serious | −0.5 | Essential content or the primary task is compromised. |
+
+**Per-pillar floor:** deductions within one pillar may total no more than −1.2, and the calculator rejects an object that stacks past it. Hitting the floor means the anchor was set too high, not that the email is worse than the rubric can express. Lower the anchor and explain why, rather than accumulating deductions until a cap trips.
+
 Read during a full scoring pass. Apply the evidence rules and email-type success criteria in [SKILL.md](../SKILL.md) before selecting anchors. Listed deductions apply to the described failure in context, not merely the presence of a visual or copy treatment. Positive signals are examples, not a checklist or a source of additional points.
 
 ## Pillar 1: Design & Hierarchy (25%) — Editorial
@@ -28,7 +40,7 @@ Measures visual structure and scroll control. Design supports the idea — not d
 
 **Deductions:**
 - Centered body text >4 lines that makes sustained reading difficult: −0.3
-- Visual clutter / no focal path: −0.4
+- Visual clutter / no focal path: −0.5
 - Generic template execution that fails to express the message or brand: −0.3
 - Poor mobile stacking / illogical column order: −0.3
 - Content truncated or overlapping at 320px: −0.3
@@ -118,7 +130,7 @@ Measures execution quality, usability, and inclusiveness. Craft is non-negotiabl
 
 **Technical hygiene:**
 - **Gmail clipping (~102 KB)**: Message code over roughly 102 KB can hide content behind a “View entire message” link. Check the delivered message where available; authoring-source size alone may differ after ESP processing. See [Mailchimp's clipping guidance](https://mailchimp.com/help/gmail-is-clipping-my-email/).
-  - Verified clipping that hides essential content → −0.4. Name what is hidden. Deduct for a separate lost control only if it creates a distinct consequence; do not manufacture enough deductions to force a cap.
+  - Verified clipping that hides essential content → −0.5. Name what is hidden. Deduct for a separate lost control only if it creates a distinct consequence; do not manufacture enough deductions to force a cap.
   - A source near or above the threshold is a risk to verify. A <90 KB authoring budget is a useful buffer, not evidence that every larger email has already failed.
 - Heading structure that obscures content relationships or navigation: −0.2. Judge semantics in context rather than counting H1 elements alone.
 - Language attribute (`lang="en"`): Missing = minor gap; deduct only when compounding other a11y issues

@@ -37,8 +37,8 @@ class CalculatorTests(unittest.TestCase):
         obj = json.loads((ROOT / "tests/fixtures/skincare.json").read_text())
         r = calculator.calculate(obj)
         self.assertTrue(r["valid"], r)
-        self.assertEqual(r["weighted_craft_score"], 3.54)
-        self.assertEqual(r["calculated_final_score"], 3.64)
+        self.assertEqual(r["weighted_craft_score"], 3.63)
+        self.assertEqual(r["calculated_final_score"], 3.73)
         self.assertEqual(r["band"], "Competent")
         self.assertEqual(r["_external"]["pillar_labels"]["strategy"], "Not verified")
 
@@ -87,10 +87,15 @@ class CalculatorTests(unittest.TestCase):
         self.assertFalse(calculator.calculate(obj)["valid"])
 
     def test_deductions_clamp_at_pillar_floor(self):
+        # Anchor 2.0 less the maximum -1.2 lands under 1.0 and clamps.
         obj = sample()
         obj["pillar_scores"]["design"] = 1.0
-        obj["pillar_reasoning"]["design"] = {"anchor": 2.0, "deductions": [{"rule": "severe issue", "value": -2.0}]}
+        obj["pillar_reasoning"]["design"] = {
+            "anchor": 2.0, "deductions": [{"rule": "severe issue", "value": -1.2}]}
         self.assertTrue(calculator.calculate(obj)["valid"])
+        # A single out-of-rubric deduction cannot dodge the floor either.
+        obj["pillar_reasoning"]["design"]["deductions"] = [{"rule": "severe issue", "value": -2.0}]
+        self.assertFalse(calculator.calculate(obj)["valid"])
 
     def test_modifiers_validate_types_tiers_and_justifications(self):
         for modifiers in [
@@ -189,6 +194,70 @@ class CalculatorTests(unittest.TestCase):
         obj = sample()
         del obj["modifiers"]
         self.assertTrue(calculator.calculate(obj)["valid"])
+
+    def test_unobserved_strategy_renormalizes_instead_of_averaging_a_constant(self):
+        # Identical observed craft must not be dragged toward the 3.0 default.
+        for value in [3.5, 4.0, 4.3, 4.5]:
+            with self.subTest(value=value):
+                obj = sample(value)
+                obj["pillar_scores"]["strategy"] = 3.0
+                obj["pillar_reasoning"]["strategy"] = {
+                    "anchor": 3.0, "evidence": "Journey context not supplied",
+                    "deductions": [], "observability_default": True}
+                r = calculator.calculate(obj)
+                self.assertTrue(r["weights_renormalized"])
+                # 4.5 is clamped by the CFO gate; everything below reads through.
+                self.assertEqual(r["calculated_final_score"], min(value, 4.4))
+
+    def test_observed_strategy_still_carries_its_weight(self):
+        obj = sample(4.5)
+        obj["pillar_scores"]["strategy"] = 2.0
+        obj["pillar_reasoning"]["strategy"] = {"anchor": 2.0, "evidence": "Observed mismatch", "deductions": []}
+        r = calculator.calculate(obj)
+        self.assertFalse(r["weights_renormalized"])
+        self.assertEqual(r["calculated_final_score"], 4.12)
+
+    def test_deductions_cannot_stack_past_the_pillar_floor(self):
+        obj = sample()
+        obj["pillar_reasoning"]["design"] = {
+            "anchor": 4.9, "evidence": "Anchor set too high",
+            "deductions": [{"rule": f"issue {i}", "value": -0.3} for i in range(5)]}
+        obj["pillar_scores"]["design"] = 3.4
+        self.assertFalse(calculator.calculate(obj)["valid"])
+        obj["pillar_reasoning"]["design"]["deductions"].pop()
+        obj["pillar_scores"]["design"] = 3.7
+        self.assertTrue(calculator.calculate(obj)["valid"])
+
+    def test_downgraded_tier_drops_its_stale_justification(self):
+        obj = sample(3.0)
+        obj["modifiers"] = {"distinctiveness_tier": "forward",
+                            "distinctiveness_justification": "Written for the Forward tier"}
+        r = calculator.calculate(obj)
+        self.assertEqual(r["modifiers"]["distinctiveness_tier"], "ownable")
+        self.assertIsNone(r["modifiers"]["distinctiveness_justification"])
+
+    def test_sender_audience_withholds_internal_math(self):
+        run = subprocess.run(
+            [sys.executable, str(SCRIPT), str(ROOT / "tests/fixtures/skincare.json"), "--audience=sender"],
+            text=True, capture_output=True)
+        self.assertEqual(run.returncode, 0, run.stderr)
+        payload = json.loads(run.stdout)
+        self.assertEqual(set(payload), {"valid", "tier", "pillar_labels"})
+        self.assertEqual(payload["tier"], "Fair")
+        self.assertEqual(payload["pillar_labels"]["strategy"], "Not verified")
+        for leaked in ["calculated_final_score", "weighted_craft_score", "pillar_scores",
+                       "pillar_reasoning", "modifiers", "band", "warnings"]:
+            self.assertNotIn(leaked, payload)
+        bad = subprocess.run([sys.executable, str(SCRIPT), "--audience=nobody"],
+                             input="{}", text=True, capture_output=True)
+        self.assertEqual(bad.returncode, 1)
+
+    def test_band_edges(self):
+        for score, band, tier in [(4.5, "Exceptional", "Gallery-Worthy"), (4.0, "Teachable", "Strong"),
+                                  (3.5, "Competent", "Fair"), (3.0, "Below", "Needs Work"),
+                                  (2.99, "Reject", "Not Ready")]:
+            with self.subTest(score=score):
+                self.assertEqual(calculator.band_for(score), (band, tier))
 
     def test_exact_band_boundary(self):
         obj = sample()

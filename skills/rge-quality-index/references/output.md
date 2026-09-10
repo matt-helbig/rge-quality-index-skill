@@ -48,9 +48,20 @@ Emit inputs only, not a model-written final score or band. This valid neutral ex
 - Non-default modifiers require nonblank justifications. Unsupported modifiers remain neutral.
 - `cfo_metric_impact` is a boolean, not a text hypothesis or the string `"false"`. When true, a testable `cfo_metric_hypothesis` is required; the calculator rejects the object without one.
 - `cfo_criteria_met` is an integer from 0 to 6, and it may not exceed the criteria you actually document. Record each met criterion in `cfo_criteria_evidence` using `criterion` and `evidence`. Criterion names must match the six in [scoring.md](scoring.md) (matched case-insensitively) and each may be counted once, so a repeated or renamed criterion cannot pad the total. The calculator enforces these inputs because the CFO gate is the only route above 4.4; it still cannot judge whether the evidence you supply is true, which remains the reviewer's job.
-- Set P5's `observability_default` only when using its unknown-context default. Do not claim observed poor strategy merely because the default is 3.0.
+- Set P5's `observability_default` only when using its unknown-context default. Do not claim observed poor strategy merely because the default is 3.0. The flag also drives renormalization: the calculator drops strategy from the weighted sum and rescales the observed pillars, so an unknown carries no numerical penalty or reward. Setting it honestly is always correct.
+- Deductions within one pillar may total no more than −1.2. Past that, lower the anchor instead; the calculator rejects the object.
 
-The calculator adds `weighted_craft_score`, `calculated_final_score`, `caps_applied`, `band`, `passes_distinctiveness_gate`, legacy `gallery_eligible`, `valid`, and `warnings`. With `--external` it also adds `_external` labels; that flag does **not** remove the internal fields. An application must select the fields appropriate for its audience.
+The calculator adds `weighted_craft_score`, `calculated_final_score`, `caps_applied`, `band`, `weights_renormalized`, `passes_distinctiveness_gate`, legacy `gallery_eligible`, `valid`, and `warnings`.
+
+Output modes:
+
+| Invocation | Emits |
+|---|---|
+| default | the internal object |
+| `--external` | the internal object plus `_external` labels. This does **not** redact anything. |
+| `--audience=sender` | only `valid`, `tier`, and `pillar_labels` — no scores, anchors, deductions, or modifiers |
+
+Use `--audience=sender` for anything a sender sees. Selecting fields by hand from the internal object is how internal anchors leak into sender feedback.
 
 ## Complete the editorial assessment after calculation
 
