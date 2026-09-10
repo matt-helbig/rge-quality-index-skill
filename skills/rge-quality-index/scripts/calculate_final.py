@@ -57,6 +57,17 @@ INTERCHANGEABLE_CAP_VALUE = 4.2
 CFO_THRESHOLD = 4.5
 CFO_CLAMP = 4.4
 
+# The six excellence criteria named in references/scoring.md.
+CFO_CRITERIA = (
+    "Behavioral reframing",
+    "Structural innovation",
+    "Visual metaphor alignment",
+    "Lifecycle intelligence",
+    "High distinctiveness",
+    "Strong conversion psychology",
+)
+CFO_CRITERIA_LOOKUP = {name.casefold(): name for name in CFO_CRITERIA}
+
 
 def band_for(score):
     for floor, band, tier in BANDS:
@@ -84,6 +95,27 @@ def number(value, low, high, *, tenths=False):
     if type(value) not in (int, float) or not low <= value <= high:
         return False
     return not tenths or decimal(value) % Decimal("0.1") == 0
+
+
+def documented_criteria(evidence, errors):
+    """Distinct canonical CFO criteria that are actually backed by evidence."""
+    if not isinstance(evidence, list):
+        errors.append("cfo_criteria_evidence must be a list")
+        return None
+    names = []
+    for item in evidence:
+        if not isinstance(item, dict) or not nonblank(item.get("criterion")) or not nonblank(item.get("evidence")):
+            errors.append("each cfo_criteria_evidence entry needs a named criterion and its evidence")
+            return None
+        canonical = CFO_CRITERIA_LOOKUP.get(item["criterion"].strip().casefold())
+        if canonical is None:
+            errors.append(f"unknown CFO criterion: {item['criterion']}")
+            return None
+        if canonical in names:
+            errors.append(f"CFO criterion counted twice: {canonical}")
+            return None
+        names.append(canonical)
+    return names
 
 
 def validate(obj, errors, warnings):
@@ -165,11 +197,24 @@ def validate(obj, errors, warnings):
         warnings.append("all_image unverified; no all-image ceiling inferred")
     elif type(obj["all_image"]) is not bool:
         errors.append("all_image must be boolean or null")
-    if type(obj.get("cfo_metric_impact", False)) is not bool:
+    # The CFO gate is the only route to 4.5+, so its inputs carry the same
+    # evidence burden as a non-default modifier: claim it, document it.
+    metric_impact = obj.get("cfo_metric_impact", False)
+    if type(metric_impact) is not bool:
         errors.append("cfo_metric_impact must be boolean")
+    elif metric_impact and not nonblank(obj.get("cfo_metric_hypothesis")):
+        errors.append("cfo_metric_impact requires a testable cfo_metric_hypothesis")
+
     criteria = obj.get("cfo_criteria_met", 0)
     if type(criteria) is not int or not 0 <= criteria <= 6:
         errors.append("cfo_criteria_met must be an integer from 0 to 6")
+        criteria = 0
+    documented = documented_criteria(obj.get("cfo_criteria_evidence", []), errors)
+    if criteria and documented is not None and len(documented) < criteria:
+        errors.append(
+            f"cfo_criteria_met={criteria} claims more than the {len(documented)} "
+            "distinct criteria documented in cfo_criteria_evidence"
+        )
 
 
 def calculate(obj):

@@ -121,6 +121,8 @@ Ownable (×1.00) or Forward (×1.05) required for RGE gallery inclusion. Interch
 | **High distinctiveness** | Scored ×1.05 (Forward tier) | See Distinctiveness guidance |
 | **Strong conversion psychology** | Sophisticated use of anchoring, loss aversion, social proof, commitment/consistency — serving the reader's decision, not just the brand's goal | Pricing anchored on annual before monthly revealed; testimonial placed to answer the objection just raised |
 
+Both conditions carry the same evidence burden as a non-default modifier. Record the hypothesis and name each criterion you count, using the labels above. Each criterion counts once — restating one in different words does not make it two — and the calculator rejects a claim that runs ahead of its documented evidence. See the input contract in [output.md](output.md).
+
 ---
 
 ## Score Bands

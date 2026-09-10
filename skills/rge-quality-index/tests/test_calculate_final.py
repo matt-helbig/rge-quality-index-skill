@@ -26,6 +26,12 @@ def sample(score=4.0):
     }
 
 
+def cfo_evidence(count):
+    """`count` distinct, documented criteria — what the gate now demands."""
+    return [{"criterion": name, "evidence": "Named element and mechanism"}
+            for name in calculator.CFO_CRITERIA[:count]]
+
+
 class CalculatorTests(unittest.TestCase):
     def test_documented_example(self):
         obj = json.loads((ROOT / "tests/fixtures/skincare.json").read_text())
@@ -133,8 +139,56 @@ class CalculatorTests(unittest.TestCase):
             (4.8, True, 2, 4.4), (4.8, True, 3, 4.8),
         ]:
             obj = sample(score)
-            obj.update(cfo_metric_impact=impact, cfo_criteria_met=criteria)
-            self.assertEqual(calculator.calculate(obj)["calculated_final_score"], expected)
+            obj.update(cfo_metric_impact=impact, cfo_criteria_met=criteria,
+                       cfo_criteria_evidence=cfo_evidence(criteria))
+            if impact:
+                obj["cfo_metric_hypothesis"] = "Testable lift hypothesis"
+            result = calculator.calculate(obj)
+            self.assertTrue(result["valid"], result)
+            self.assertEqual(result["calculated_final_score"], expected)
+
+    def test_cfo_claims_require_documented_evidence(self):
+        # An undocumented claim is the only remaining route to 4.5+; close it.
+        unsupported = [
+            {"cfo_metric_impact": True, "cfo_criteria_met": 3, "cfo_criteria_evidence": []},
+            {"cfo_metric_impact": True, "cfo_criteria_met": 3,
+             "cfo_metric_hypothesis": "Lift", "cfo_criteria_evidence": cfo_evidence(2)},
+            # a blank hypothesis is not a hypothesis
+            {"cfo_metric_impact": True, "cfo_metric_hypothesis": "   ", "cfo_criteria_met": 0},
+            # the same criterion cannot count twice toward the 3-of-6 threshold
+            {"cfo_metric_impact": True, "cfo_metric_hypothesis": "Lift", "cfo_criteria_met": 3,
+             "cfo_criteria_evidence": cfo_evidence(1) * 3},
+            {"cfo_metric_impact": True, "cfo_metric_hypothesis": "Lift", "cfo_criteria_met": 1,
+             "cfo_criteria_evidence": [{"criterion": "Looks nice", "evidence": "x"}]},
+            {"cfo_metric_impact": True, "cfo_metric_hypothesis": "Lift", "cfo_criteria_met": 1,
+             "cfo_criteria_evidence": [{"criterion": "High distinctiveness", "evidence": ""}]},
+            {"cfo_criteria_met": 1, "cfo_criteria_evidence": "Behavioral reframing"},
+        ]
+        for claim in unsupported:
+            with self.subTest(claim=claim):
+                obj = sample(4.8)
+                obj.update(claim)
+                result = calculator.calculate(obj)
+                self.assertFalse(result["valid"], result)
+                self.assertTrue(result["errors"])
+
+    def test_cfo_criteria_names_are_canonicalized(self):
+        obj = sample(4.8)
+        obj.update(cfo_metric_impact=True, cfo_metric_hypothesis="Testable lift hypothesis",
+                   cfo_criteria_met=3, cfo_criteria_evidence=[
+                       {"criterion": "  behavioral REFRAMING ", "evidence": "Named mechanism"},
+                       {"criterion": "Structural innovation", "evidence": "Named mechanism"},
+                       {"criterion": "high distinctiveness", "evidence": "Named mechanism"},
+                   ])
+        result = calculator.calculate(obj)
+        self.assertTrue(result["valid"], result)
+        self.assertEqual(result["calculated_final_score"], 4.8)
+
+    def test_unclaimed_cfo_inputs_stay_valid(self):
+        # Defaults and legacy objects that claim nothing are untouched.
+        obj = sample()
+        del obj["modifiers"]
+        self.assertTrue(calculator.calculate(obj)["valid"])
 
     def test_exact_band_boundary(self):
         obj = sample()
