@@ -11,13 +11,14 @@ Usage:
     cat input.json | python calculate_final.py      # same, via stdin
     python calculate_final.py input.json --external # also emit external labels
 
-Input: the internal scoring object (see SKILL.md schema). Fields computed by
+Input: the internal scoring object (see references/output.md). Fields computed by
 this script (weighted_craft_score, calculated_final_score, caps_applied, band,
 gallery_eligible) may be omitted or present; they are overwritten either way.
 """
 
 import json
 import sys
+from decimal import Decimal, ROUND_FLOOR
 
 WEIGHTS = {
     # seasonal intentionally maps to promotional (default) weights
@@ -59,63 +60,116 @@ CFO_CLAMP = 4.4
 
 def band_for(score):
     for floor, band, tier in BANDS:
-        if score >= floor:
+        if decimal(score) >= decimal(floor):
             return band, tier
     return "Reject", "Not Ready"
 
 
 def pillar_label(score):
     for floor, label in PILLAR_LABELS:
-        if score >= floor:
+        if decimal(score) >= decimal(floor):
             return label
     return "Critical"
 
 
+def decimal(value):
+    return Decimal(str(value))
+
+
+def nonblank(value):
+    return isinstance(value, str) and bool(value.strip())
+
+
+def number(value, low, high, *, tenths=False):
+    if type(value) not in (int, float) or not low <= value <= high:
+        return False
+    return not tenths or decimal(value) % Decimal("0.1") == 0
+
+
 def validate(obj, errors, warnings):
+    if not isinstance(obj, dict):
+        errors.append("input must be a JSON object")
+        return
     email_type = obj.get("email_type", "promotional")
-    if email_type not in WEIGHTS:
-        errors.append(f"unknown email_type '{email_type}'")
+    if not isinstance(email_type, str) or email_type not in WEIGHTS:
+        errors.append("unknown email_type")
+    if "email_type" not in obj:
+        warnings.append("email_type omitted; using promotional weights")
 
-    scores = obj.get("pillar_scores", {})
+    scores = obj.get("pillar_scores")
+    if not isinstance(scores, dict):
+        errors.append("pillar_scores must be an object")
+        return
     for p in PILLARS:
-        v = scores.get(p)
-        if v is None:
-            errors.append(f"missing pillar score: {p}")
-        elif not (1.0 <= v <= 5.0):
-            errors.append(f"pillar '{p}' out of range: {v}")
+        if not number(scores.get(p), 1.0, 5.0, tenths=True):
+            errors.append(f"pillar '{p}' must be a number from 1.0 to 5.0 in tenths")
 
-    # arithmetic audit: anchor + deductions should reproduce the pillar score
-    reasoning = obj.get("pillar_reasoning", {})
-    for p, r in reasoning.items():
-        if p not in PILLARS or "anchor" not in r:
-            continue
-        computed = r["anchor"] + sum(d.get("value", 0) for d in r.get("deductions", []))
-        computed = max(1.0, min(5.0, computed))
-        reported = scores.get(p)
-        if reported is not None and abs(computed - reported) > 0.05:
-            warnings.append(
-                f"pillar '{p}' arithmetic mismatch: anchor+deductions={computed:.2f}, reported={reported:.2f}"
-            )
+    reasoning = obj.get("pillar_reasoning")
+    if reasoning is None and "pillar_reasoning" not in obj:
+        warnings.append("pillar_reasoning omitted: legacy score cannot be audited; new runs must include it")
+    elif not isinstance(reasoning, dict):
+        errors.append("pillar_reasoning must be an object")
+    else:
+        for p in PILLARS:
+            r = reasoning.get(p)
+            if not isinstance(r, dict):
+                errors.append(f"missing or invalid reasoning for '{p}'")
+                continue
+            anchor, deductions = r.get("anchor"), r.get("deductions")
+            if not number(anchor, 1.0, 5.0, tenths=True) or not isinstance(deductions, list):
+                errors.append(f"invalid anchor or deductions for '{p}'")
+                continue
+            if any(not isinstance(d, dict) or not nonblank(d.get("rule")) or
+                   not number(d.get("value"), -5.0, 0.0, tenths=True) or d["value"] >= 0
+                   for d in deductions):
+                errors.append(f"deductions for '{p}' require a named rule and negative numeric value in tenths")
+                continue
+            computed = max(Decimal("1"), min(Decimal("5"),
+                decimal(anchor) + sum((decimal(d["value"]) for d in deductions), Decimal("0"))))
+            reported = scores.get(p)
+            if number(reported, 1.0, 5.0, tenths=True):
+                # Accept a completed all-image object whose effective score was clamped.
+                effective = min(computed, decimal(ALL_IMAGE_A11Y_CEILING)) if p == "accessibility" and obj.get("all_image") is True else computed
+                if decimal(reported) not in (computed, effective):
+                    errors.append(f"pillar '{p}' arithmetic mismatch: computed={computed}, reported={reported}")
+            if "observability_default" in r and type(r["observability_default"]) is not bool:
+                errors.append(f"observability_default for '{p}' must be boolean")
+            if p == "strategy" and r.get("observability_default") is True and (anchor != 3.0 or deductions or reported != 3.0):
+                errors.append("unobserved strategy must use anchor 3.0, no deductions, and score 3.0")
 
-    # non-default modifiers require justification
     m = obj.get("modifiers", {})
+    if not isinstance(m, dict):
+        errors.append("modifiers must be an object")
+        return
+    tier = m.get("distinctiveness_tier", "ownable")
+    if not isinstance(tier, str) or tier not in DISTINCTIVENESS:
+        errors.append("unknown distinctiveness_tier")
     checks = [
-        (m.get("distinctiveness_tier", "ownable") != "ownable", "distinctiveness_justification"),
-        (m.get("lifecycle_coherence", 1.00) != 1.00, "lifecycle_justification"),
+        (tier != "ownable", "distinctiveness_justification"),
+        (m.get("lifecycle_coherence", 1.0) != 1.0, "lifecycle_justification"),
         (m.get("courage_bonus", 0.0) != 0.0, "courage_justification"),
         (m.get("screenshot_bonus", 0.0) != 0.0, "screenshot_justification"),
     ]
     for non_default, field in checks:
-        if non_default and not m.get(field):
+        if non_default and not nonblank(m.get(field)):
             errors.append(f"non-default modifier without justification: {field}")
+    for field, default, low, high in [
+        ("lifecycle_coherence", 1.0, 1.0, 1.05),
+        ("courage_bonus", 0.0, 0.0, 0.3),
+        ("screenshot_bonus", 0.0, 0.0, 0.2),
+    ]:
+        if not number(m.get(field, default), low, high):
+            errors.append(f"{field} must be a number from {low} to {high}")
 
-    # modifier range checks
-    if not (1.00 <= m.get("lifecycle_coherence", 1.00) <= 1.05):
-        errors.append("lifecycle_coherence out of range (1.00–1.05)")
-    if not (0.0 <= m.get("courage_bonus", 0.0) <= 0.30):
-        errors.append("courage_bonus out of range (0.00–0.30)")
-    if not (0.0 <= m.get("screenshot_bonus", 0.0) <= 0.20):
-        errors.append("screenshot_bonus out of range (0.00–0.20)")
+    if obj.get("all_image") is None:
+        warnings.append("all_image unverified; no all-image ceiling inferred")
+    elif type(obj["all_image"]) is not bool:
+        errors.append("all_image must be boolean or null")
+    if type(obj.get("cfo_metric_impact", False)) is not bool:
+        errors.append("cfo_metric_impact must be boolean")
+    criteria = obj.get("cfo_criteria_met", 0)
+    if type(criteria) is not int or not 0 <= criteria <= 6:
+        errors.append("cfo_criteria_met must be an integer from 0 to 6")
 
 
 def calculate(obj):
@@ -124,79 +178,95 @@ def calculate(obj):
     if errors:
         return {"valid": False, "errors": errors, "warnings": warnings}
 
-    email_type = obj["email_type"]
-    scores = dict(obj["pillar_scores"])
+    email_type = obj.get("email_type", "promotional")
+    scores = {p: decimal(obj["pillar_scores"][p]) for p in PILLARS}
     m = obj.get("modifiers", {})
 
     # all-image emails: accessibility pillar cannot exceed 2.9 (forces hard cap)
-    if obj.get("all_image") and scores["accessibility"] > ALL_IMAGE_A11Y_CEILING:
-        scores["accessibility"] = ALL_IMAGE_A11Y_CEILING
+    if obj.get("all_image") and scores["accessibility"] > decimal(ALL_IMAGE_A11Y_CEILING):
+        scores["accessibility"] = decimal(ALL_IMAGE_A11Y_CEILING)
         caps.append("All-Image A11y Ceiling (pillar clamped to 2.9)")
 
     weights = WEIGHTS[email_type]
-    craft = sum(scores[p] * weights[p] for p in PILLARS)
+    craft = sum(scores[p] * decimal(weights[p]) for p in PILLARS)
 
     # distinctiveness with Forward craft floor
     tier = m.get("distinctiveness_tier", "ownable")
-    if tier == "forward" and craft < FORWARD_CRAFT_FLOOR:
+    if tier == "forward" and craft < decimal(FORWARD_CRAFT_FLOOR):
         tier = "ownable"
         warnings.append(
             f"Forward tier downgraded to Ownable: weighted craft {craft:.2f} below {FORWARD_CRAFT_FLOOR} floor"
         )
-    dist_mult = DISTINCTIVENESS[tier]
+    dist_mult = decimal(DISTINCTIVENESS[tier])
 
-    courage = m.get("courage_bonus", 0.0)
-    if courage > 0 and craft < COURAGE_CRAFT_FLOOR:
+    courage = decimal(m.get("courage_bonus", 0.0))
+    if courage > 0 and craft < decimal(COURAGE_CRAFT_FLOOR):
         warnings.append(
             f"Courage bonus (+{courage}) applied with weighted craft {craft:.2f} below {COURAGE_CRAFT_FLOOR} — review"
         )
 
-    modified = craft * dist_mult * m.get("lifecycle_coherence", 1.00)
-    final = modified + courage + m.get("screenshot_bonus", 0.0)
+    modified = craft * dist_mult * decimal(m.get("lifecycle_coherence", 1.00))
+    final = modified + courage + decimal(m.get("screenshot_bonus", 0.0))
 
     # caps, in order
-    if scores["accessibility"] < A11Y_CAP_TRIGGER and final > A11Y_CAP_VALUE:
-        final = A11Y_CAP_VALUE
+    if scores["accessibility"] < decimal(A11Y_CAP_TRIGGER) and final > decimal(A11Y_CAP_VALUE):
+        final = decimal(A11Y_CAP_VALUE)
         caps.append("Accessibility Hard Cap (final ≤3.4)")
-    if tier == "interchangeable" and final > INTERCHANGEABLE_CAP_VALUE:
-        final = INTERCHANGEABLE_CAP_VALUE
+    if tier == "interchangeable" and final > decimal(INTERCHANGEABLE_CAP_VALUE):
+        final = decimal(INTERCHANGEABLE_CAP_VALUE)
         caps.append("Interchangeability Cap (final ≤4.2)")
 
     # CFO gate
-    if final >= CFO_THRESHOLD:
+    if final >= decimal(CFO_THRESHOLD):
         metric_ok = bool(obj.get("cfo_metric_impact"))
         criteria = int(obj.get("cfo_criteria_met", 0))
         if not (metric_ok and criteria >= 3):
-            final = CFO_CLAMP
+            final = decimal(CFO_CLAMP)
             caps.append(
                 f"CFO Gate (metric_impact={metric_ok}, criteria={criteria}/6 — clamped to 4.4)"
             )
 
-    final = max(1.0, min(5.0, final))
+    final = max(Decimal("1.0"), min(Decimal("5.0"), final))
+    # Floor display precision after gates; do not round up into an unearned band.
+    final = final.quantize(Decimal("0.01"), rounding=ROUND_FLOOR)
     band, tier_label = band_for(final)
 
     result = dict(obj)
-    result["pillar_scores"] = scores
+    result["email_type"] = email_type
+    result["pillar_scores"] = {p: float(v) for p, v in scores.items()}
     result["modifiers"] = {**m, "distinctiveness_tier": tier}
-    result["weighted_craft_score"] = round(craft, 2)
-    result["calculated_final_score"] = round(final, 2)
+    result["weighted_craft_score"] = float(round(craft, 2))
+    result["calculated_final_score"] = float(final)
     result["caps_applied"] = caps
     result["band"] = band
-    result["gallery_eligible"] = tier != "interchangeable"
+    result["passes_distinctiveness_gate"] = tier != "interchangeable"
+    # Compatibility alias, NOT a complete gallery recommendation.
+    result["gallery_eligible"] = result["passes_distinctiveness_gate"]
     result["valid"] = True
     result["warnings"] = warnings
     result["_external"] = {
         "tier": tier_label,
         "pillar_labels": {p: pillar_label(scores[p]) for p in PILLARS},
     }
+    if obj.get("pillar_reasoning", {}).get("strategy", {}).get("observability_default") is True:
+        result["_external"]["pillar_labels"]["strategy"] = "Not verified"
     return result
 
 
 def main():
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
-    raw = open(args[0]).read() if args else sys.stdin.read()
-    obj = json.loads(raw)
-    result = calculate(obj)
+    try:
+        if args:
+            with open(args[0], encoding="utf-8") as source:
+                raw = source.read()
+        else:
+            raw = sys.stdin.read()
+        def reject_constant(value):
+            raise ValueError(f"invalid JSON number: {value}")
+        obj = json.loads(raw, parse_constant=reject_constant)
+        result = calculate(obj)
+    except (OSError, ValueError) as exc:
+        result = {"valid": False, "errors": [str(exc)], "warnings": []}
     if "--external" not in sys.argv:
         result.pop("_external", None)
     json.dump(result, sys.stdout, indent=2, ensure_ascii=False)

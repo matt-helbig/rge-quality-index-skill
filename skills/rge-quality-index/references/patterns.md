@@ -1,42 +1,31 @@
-# Pattern Libraries: Rejection Clusters and 4.1+ Signals
+# Cross-pillar review prompts
 
-Load this file during any scoring pass once pillar anchors are set. Rejection patterns confirm low-band placement; 4.1+ patterns justify high-band placement. Neither replaces pillar arithmetic.
+Use when a borderline judgment needs a second look. These patterns identify questions to investigate, not automatic rejections or guaranteed score bands. Apply only supported rubric deductions, without counting the same consequence twice.
 
-## Rejection Patterns
+## Patterns that warrant scrutiny
 
-Compound patterns — individual issues trigger deductions; these combinations consistently produce rejection.
+- Dense content with no discernible reading order or action priority.
+- Essential content that is illegible in the inspected render or unavailable with images off.
+- Copy that makes generic promises without explaining a specific benefit or task.
+- Multiple unrelated asks competing equally when the email needs one primary outcome.
+- Desktop execution that breaks in a supplied mobile render.
+- Onboarding that asks for several commitments before explaining the recipient's next step.
+- Labels or interactions that promise behavior the email does not provide.
+- Animation whose fallback hides essential content or whose motion disrupts reading.
+- Subject lines that create a misleading transactional or security expectation.
 
-- **Density + layout confusion**: Overwhelming density compounded by weak hierarchy and unclear CTA priority
-- **Legibility failures**: Thin text on colored backgrounds (pink, teal, navy, medium-gray) + tight line heights + inconsistent sizing — nothing else saves the email
-- **AI slop cluster**: Long CTAs + emoji-heavy copy + company-focused mission-speak + no editorial voice
-- **All-image with no live text**: No fallback, no screen reader path, no progressive loading
-- **Structural Frankenstein**: Newsletter + sale + survey + referral with no hierarchy prioritizing any of them
-- **Mobile-first failure**: Strong desktop, failed mobile execution — poor stacking, insufficient tap targets, illegible text
-- **Onboarding overwhelm**: Front-loaded information, company-focused copy, cognitive overload before context exists
-- **Interaction confusion**: Pill-shaped non-clickable labels, fake quiz patterns, affordances that set expectations the email doesn't fulfill
-- **Header clutter**: Multiple fonts, weights, colors, treatments crammed into the header — no entry point
-- **Heavy GIF load, no fallback**: Multiple large GIFs or any GIF >500kb with blank/mid-transition first frames
-- **Bilingual without segmentation**: Both languages in one send without dynamic content — a workaround, not inclusive practice
-- **Higher education bulletin board**: Every program, event, and notice at equal visual priority — nothing survives
-- **Excessive centered text**: Walls of small centered copy + tight line heights — harms dyslexic readers
+Do not reject based on a count of emojis, bullets, fonts, languages, or familiar phrases alone. Neither AI authorship nor inadequate strategy can be inferred from those features.
 
----
+## Potential reasons to feature
 
-## Patterns That Push Emails Into 4.1+
+- An images-off experience that preserves an unusually clear narrative or task path.
+- Subject, preheader, and opener that deliver a specific, memorable payoff together.
+- A visual hierarchy that makes a complex selection unusually easy to navigate.
+- Storytelling whose sequence changes the reader's understanding rather than merely decorating the offer.
+- Useful research or data made legible through a thoughtful explanation or visual.
+- A distinctive brand voice expressed through precise copy and structure.
+- Personalization that responds to an evidenced recipient need without feeling intrusive.
+- Accessible progressive enhancement with a well-designed fallback.
+- An exceptionally clear service interaction worth studying for its restraint.
 
-Cross-pillar signals that consistently separate good from great. An email hitting several of these is a strong candidate for 4.1–4.6.
-
-- **Works without images**: Core message communicates even if images don't load — live text, strong alt text, structural clarity all doing real work
-- **Inbox impression fully crafted**: Subject line, preheader, and sender name work as a coherent unit — the open is earned before the email is seen
-- **Smart CTA differentiation**: Color, size, and shape create unambiguous primary/secondary hierarchy
-- **Storytelling with a payoff**: Real narrative (founder voice, partnership story, behind-the-scenes) that uses scrollable format to deliver, not just to show off
-- **Authority content as the centerpiece**: Original research, benchmark data, or credible proof is the value proposition
-- **Unmistakable brand without the logo**: Voice + palette + structure identify the brand without needing the logo
-- **Mobile-first thinking visible**: Stacking, tap targets, and reflow clearly reflect mobile-first design — not afterthought adaptation
-- **Personalization that earns trust**: Genuine first-party signal — quiz result, purchase history, usage data, consultation context — not just `{{first_name}}`
-- **Dark mode excellence with element outlining**: Borders, outlines, and layered treatments preserve legibility — not just background inversion
-- **Interactive CSS-based elements**: Functional, content-appropriate, with acceptable fallback
-- **Data visualization**: Personalized or aggregate data presented visually — high-value when the data is genuinely useful to this recipient
-- **Live text in fashion / luxury**: Genuinely rare in those categories — call it out explicitly
-- **Character-driven design at scale**: Mascot systems applied with visual discipline — unmistakably brand-specific
-- **Editorial typography as concept**: Type is the idea — oversized serifs, expressive display, deliberate pacing
+For any proposed feature, name the specific element, how it works, and the lesson another practitioner can use. A technique's presence alone is not a reason to feature.

@@ -1,19 +1,13 @@
-# Industry Scoring Context
+# Industry context
 
-Load this file when the email's industry is identifiable. Apply as contextual judgment on top of the core rubric — industry context adjusts expectations, never the formula.
+Read when industry or audience context changes the judgment. Context adjusts the interpretation of evidence, not the numerical weights. Do not infer a brand's audience or performance from its category alone.
 
-**SaaS / B2B**: Screenshot-heavy product-forward design is the norm — "show the product, not just the promise." Product UI, in-context dashboards, and feature demos earn Strategy credit over abstract hero imagery. Authority-as-differentiator (surveys, benchmarks, research) is the largest growing campaign type. Expert audiences require copy that trusts the reader — hype is a deduction.
-
-**E-commerce / Retail**: High-SKU density is not a deduction — apply Retail Density Safeguard. Product photography as hero is increasingly expected. Personalized recommendations and browse/cart abandonment trigger logic are where strategic lift happens.
-
-**Fashion / Luxury**: Design execution and brand cohesion carry higher effective weight. Live text is rare in the category — call it out as a positive signal. Restrained, precise aesthetics can be excellent in context. Apply Contextual Brand Evaluation.
-
-**Beauty / Personal Care**: Data-visualization (before/after, ingredient stories, personalized match results) is a strong positive. Consultation flows and quiz-result emails are high-value.
-
-**Health / Wellness / Medical**: Copy must trust the reader. Clinical language should be substantiated, not gestured at. WCAG compliance is especially important — audiences may include users with disabilities.
-
-**Food / Beverage**: GIF animation and sensory-evocative imagery are higher-value signals than in other industries. Recipe and ingredient storytelling are legitimate email formats worth scoring generously on editorial merit.
-
-**Non-Profit / Charity**: Emotional authenticity outweighs production polish. Founder/leadership voice is appropriate. Donation CTAs should be frictionless and transparent about impact.
-
-**SaaS Newsletter / B2B Content**: Voice distinctiveness and editorial POV matter more than in promotional email. AI slop is especially detectable in this genre — generic thought leadership language is a P3 deduction.
+- **SaaS / B2B:** Product UI or a concrete workflow can make a benefit understandable. Abstract imagery is not inherently inferior if it serves the idea. Match vocabulary to the audience's actual expertise; do not require a casual tone.
+- **E-commerce / retail:** Product grids may be the intended browsing experience. Evaluate hierarchy, offer clarity, and navigation rather than raw SKU density. Product recommendations earn strategic credit only when relevance is supported.
+- **Fashion / luxury:** Restraint, conventional grids, and expressive imagery can be deliberate. Judge precision and brand expression in context. Essential live text and usable alternatives remain important; category conventions do not waive accessibility rules.
+- **Beauty / personal care:** Before/after imagery, ingredient explanations, and consultation results need understandable, supported claims. A data-like visual is not evidence by itself.
+- **Health / medical:** Favor clarity, sensitivity, and substantiated claims. Technical language may be appropriate for specialists. Do not certify clinical or legal claims through the email rubric.
+- **Food / beverage:** Sensory imagery, recipes, and ingredient stories can provide real value. Animation is optional and earns credit only for its contribution and usable fallback.
+- **Non-profit / charity:** Assess clarity of the request, credible impact, and respectful storytelling. Commercial revenue is not the necessary outcome; a donation, volunteer action, or useful information may be the purpose.
+- **Editorial / B2B newsletters:** Evaluate selection, perspective, useful substance, and readable organization. Multiple links and a complete in-email reading experience are legitimate outcomes.
+- **Multilingual audiences:** More than one language can be intentional and inclusive. Evaluate reading order, language identification, and usable navigation; do not assume segmentation into separate sends is always preferable.
