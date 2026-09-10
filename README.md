@@ -2,254 +2,160 @@
 
 **Not just pretty. Persuasive.**
 
-A five-pillar framework for scoring marketing emails, developed by
-[Really Good Emails](https://reallygoodemails.com). Packaged as a
-[Claude Code](https://docs.claude.com/en/docs/claude-code/overview) skill.
+A five-pillar review framework from [Really Good Emails](https://reallygoodemails.com), packaged as an agent skill. It decides whether an email is worth featuring in the gallery, and tells a sender what to fix.
 
-Every pillar is scored **1.0–5.0**, then weighted. The pillars are the whole
-framework — everything else exists to keep them honest.
+## How RGE reads an email
 
-| | Pillar | Weight | The question it answers |
-|---|---|:---:|---|
-| **1** | Design & Hierarchy | 25% | Can you read it? |
-| **2** | Accessibility & Technical Craft | 20% | Can *everyone* read it? |
-| **3** | Copy & Message Discipline | 20% | Is it worth reading? |
-| **4** | Behavioral Leverage | 20% | Does it make you act? |
-| **5** | Strategy & Monetization | 15% | Should it exist at all? |
+**Every review names the lesson.** What should another designer or marketer learn from this email? Name the element and say how it works. "Beautiful", "on-brand" and "high-converting" are not reasons to feature anything. If there is no defensible lesson, say so instead of inventing one.
 
-Pillars 1–3 are the **editorial** lens (65%): is this email worth archiving,
-studying, or presenting on stage? Pillars 4–5 are **performance** (35%): does it
-intelligently drive behavior, revenue, or retention?
+**Gallery merit and readiness are separate questions.** An email can be well built and still too ordinary for the gallery. A decline says nothing about whether it should ship.
 
----
+**The email is judged against its own job.** A receipt does not need an upsell. A newsletter with forty links may be doing exactly what it should. Persuasion, urgency and personalization are tools, not requirements.
 
-## Pillar 1 — Design & Hierarchy (25%)
+**Distinctiveness belongs to the work, not the brand.** Cover the logo. If the voice, imagery and structure still identify the sender, the execution is ownable. Not recognizing a brand is not evidence that its email is generic, and fame is not evidence that it isn't.
 
-Visual structure and scroll control. Design supports the idea; it isn't
-decorative filler.
+## The five pillars
 
-| Signal | Strong (4–5) | Weak (1–2) |
+Each pillar scores 1.0 to 5.0 in tenths. Weights shown are for promotional email and shift by type.
+
+| Pillar | Weight | The question |
+|---|---:|---|
+| Design and hierarchy | 25% | Is the message organized and readable? |
+| Accessibility and technical craft | 20% | Can recipients reach the content and finish the task? |
+| Copy and message discipline | 20% | Are the words clear, specific and appropriate? |
+| Behavioral leverage | 20% | Does the email support its intended outcome? |
+| Strategy and monetization intelligence | 15% | Does it fit the recipient's situation? |
+
+### 1. Design and hierarchy
+
+Visual structure and scroll control. Design carries the idea rather than decorating it.
+
+| Signal | Strong | Weak |
 |---|---|---|
-| Hierarchy | Clear focal path, scannable in 3 seconds | Wall of content, no entry point |
-| Scroll pacing | Rhythm between dense and breathing sections | Monotonous blocks |
-| CTA prominence | Primary unmissable, secondary subordinate | Buried or competing equally |
-| Typography | Deliberate pairing, readable scale | System defaults, too many fonts |
-| Layout | Intentional grid, purposeful structure | Cramped, misaligned padding |
-| Brand cohesion | Recognizable as this brand | Generic template energy |
+| Hierarchy | Clear focal path, scannable in about three seconds | Wall of content, no entry point |
+| Scroll pacing | Rhythm between dense and open sections | Monotonous blocks |
+| CTA prominence | Primary action unmissable, secondary subordinate | Buried, or competing equally |
+| Typography | Deliberate pairing, readable scale | Inconsistent sizing that hides the hierarchy |
+| Layout | Intentional grid, consistent padding | Cramped, misaligned, arbitrary spacing |
+| Brand cohesion | Recognizable as this sender | Generic template energy |
 
-**Benchmarks:** body text ≥16px · headings 22–30px · max 2–3 font families ·
-CTA buttons ≥44×44px · width 600–700px · height 1500–2000px ideal, flag >3000px ·
-no truncation or overlap at 320px.
+Benchmarks for reviewing a render, as starting points rather than automatic failures: body text 16px and up, headings 22 to 30px, two or three font families, tap targets 44 x 44px, width 600 to 700px. Flag anything taller than 3000px or heavier than 1.5MB. Mobile should stack logically with nothing truncated at 320px.
 
-**Costs the most:** visual clutter with no focal path (−0.4), centered text over
-four lines (−0.3), a template applied with no nuance (−0.3).
+Popular treatments are not distinctive by themselves. Rounded corners and heavy gradients work as accents; as the entire design idea they are neutral at best. High-SKU retail density is not a deduction, so judge prioritization rather than product count.
 
----
+### 2. Accessibility and technical craft
 
-## Pillar 2 — Accessibility & Technical Craft (20%)
+Execution quality, usability, and whether everyone can actually read the thing. This is where craft becomes non-negotiable.
 
-Execution quality, usability, and inclusiveness. Craft is non-negotiable, and
-this is the only pillar that can cap the entire score.
-
-| Signal | Strong (4–5) | Weak (1–2) |
+| Signal | Strong | Weak |
 |---|---|---|
-| Color contrast | Meets WCAG AA everywhere | Light gray on white, ghost buttons |
-| Mobile readability | ≥16px, comfortable at arm's length | Requires zooming |
-| Tap targets | ≥44×44px, generous spacing | Tiny, overlapping |
-| Alt text | Appropriate by image type, empty on decorative | Missing or generic |
-| Dark mode | Backgrounds invert, text legible | Invisible text, broken backgrounds |
-| Footer | Unsub prominent and functional | Buried in fine print |
+| Contrast | Measured text contrast meets AA | Verified low-contrast essential text |
+| Mobile readability | Comfortable at arm's length | Requires zooming |
+| Tap targets | 44 x 44px with room around them | Tiny links, overlapping taps |
+| Alt text | Matched to image type, empty on decorative | Missing, generic, or "IMG_3847.png" |
+| Dark mode | Text legible, element definition preserved | Invisible text, broken backgrounds |
+| Footer | Unsubscribe findable and working | Buried in fine print |
+| Animation | First frame meaningful on its own | Blank or mid-transition |
 
-**Dark mode asks its question first.** Check `<head>` for both opt-in metas
-(`color-scheme` and `supported-color-schemes`). If they're present, the email
-declared support and inversion failures are *craft failures*. If they're absent,
-dark mode was never targeted and clients will force-invert — note it, but deduct
-only where legibility actually breaks. Absence is a maturity signal, not a defect.
+Alt text is judged as a reading experience, not one image at a time. Read in order alongside the live text, it should make sense out loud. A description that breaks the argument is either unnecessary, so mark it decorative, or badly written.
 
-**Mechanical checks that catch real sends:** Gmail's ~102 KB clipping threshold
-(over it, the footer and unsubscribe vanish and tracking pixels below the cut
-never fire), merge-tag fallbacks (`Hi ,` is the most visible failure in email and
-it lands on the highest-attention line), auto-link suppression, and character
-encoding.
+This pillar can veto the whole email. Fail it and the final score is capped no matter how good the rest is. Build the entire message inside images with no live text and you trip that cap automatically, and a live legal footer does not get you out of it.
 
-**Two hard rules:**
-- An all-image email cannot score above **2.9** here. No screen reader path is a
-  structural exclusion of readers, not a style choice.
-- If this pillar falls below **3.0**, the final score is capped at **3.4** — an
-  email that fails accessibility doesn't belong in the Competent band.
+### 3. Copy and message discipline
 
----
+What the words say and how they sound. What they make you do is pillar 4.
 
-## Pillar 3 — Copy & Message Discipline (20%)
-
-What the words say and how they sound. What they make you *do* is Pillar 4.
-
-| Signal | Strong (4–5) | Weak (1–2) |
+| Signal | Strong | Weak |
 |---|---|---|
 | Subject line | Specific, earned urgency | Generic, spammy, misleading |
 | Preheader | Extends the subject | Repeats it, or "View in browser" |
-| Headline | Immediately communicates value | Buried lede |
-| Body copy | Concise, scannable, benefit-focused | Verbose, feature-dumping |
-| CTA text | Clear action in brand voice | "Shop Now", "Click Here" |
-| Tone & voice | Recognizable without the logo | Generic corporate |
-| Specificity | Real numbers, named outcomes | Filler adjectives |
-| User-centricity | Written from the recipient's view | "We want to help you…" |
+| Hook | Communicates value immediately | Buried lede |
+| Body copy | Concise, scannable, reader-focused | Verbose, jargon-heavy, feature dumping |
+| CTA text | Clear action and destination | "Click here" with no supporting context |
+| Voice | Recognizable without the logo | Generic corporate |
+| Specificity | Real numbers, named outcomes | Vague promises, filler adjectives |
 
-**The three-part contract.** Subject line, preheader, and opening sentence are
-scored as one unit, not three. A question in the subject demands an answer in the
-opener. A tease demands a payoff. Evaluating the contract beats scoring the
-pieces in isolation.
+Subject line, preheader and opening sentence work as one contract with the reader. A question in the subject needs an answer in the opener. A tease needs a payoff.
 
-**Costs the most:** clichés and filler (−0.3), company-focused onboarding copy
-(−0.3), empty urgency with no real scarcity (−0.2). Deceptive subject lines that
-mimic transactional or security alerts are a trust violation, not clever
-copywriting — −0.5 and a rejection-level flag.
+Subject lines that imitate transactional or security alerts to lift opens are a trust violation. That is the one copy failure that can sink an otherwise strong email on its own.
 
----
+Generic copy is scored as a reader problem. Nothing here infers how the copy was produced, and emoji counts prove nothing.
 
-## Pillar 4 — Behavioral Leverage (20%)
+### 4. Behavioral leverage
 
-What the email makes you do. Psychological precision beats intensity.
+What the email makes you do. Precision beats intensity.
 
-| Signal | Strong (4–5) | Weak (1–2) |
+| Signal | Strong | Weak |
 |---|---|---|
 | Tension | Names a pain the reader recognizes | Generic feature announcement |
-| Friction removal | One dominant CTA, simplified next step | Multiple equal asks |
-| Objection handling | Addresses hesitation, risk reversal | Ignores why someone says no |
-| Motivation | Concrete outcome, real constraint | Vague value prop, artificial "HURRY!" |
-| Reframing | Shifts how the reader sees the decision | No perspective shift |
-| Focus | One primary behavior | Newsletter + sale + survey + referral |
+| Friction removal | One dominant action, simplified next step | Multiple equal asks |
+| Objection handling | Addresses the hesitation directly | Ignores why someone would say no |
+| Motivation | Concrete outcome, real constraint | Manufactured urgency |
+| Focus | Everything supports one behavior | Newsletter plus sale plus survey plus referral |
 
-**What this pillar is not:** button repetition, CTA volume, discount size,
-emotional exaggeration, or countdown timers. Intensity is not leverage.
+Personalization earns credit by depth. A first name is table stakes and moves nothing. Behavioral signal, meaning viewed items, usage data or quiz results, is a real lift. A personalized data visualization is the top tier when the data is genuinely useful to this recipient.
 
-**Link economy:** max three link clusters for promotional sends — one primary,
-two secondary. −0.2 per cluster beyond that. Newsletters are exempt; product
-grids are judged on hierarchy control, since grid links are navigation rather
-than competing CTAs.
+A promotional email gets about three link clusters before it starts costing. Newsletters are exempt, because the links are the point, and product grids count as navigation rather than competing asks.
 
-**Personalization is tiered.** First-name substitution is table stakes and earns
-nothing. Behavioral personalization earns real lift. The gold standard is
-*invisible personalization* — an email that reads like a colleague wrote it
-knowing something true about you.
+Button repetition, discount size, emotional exaggeration and countdown timers are not leverage.
 
----
+### 5. Strategy and monetization intelligence
 
-## Pillar 5 — Strategy & Monetization (15%)
+Whether the email fits where the recipient actually is.
 
-Whether the email should exist, in this moment, in this sequence.
-
-| Signal | Strong (4–5) | Weak (1–2) |
+| Signal | Strong | Weak |
 |---|---|---|
 | Funnel fit | Right for the lifecycle stage | Wrong tone for the moment |
-| Next step | Obvious post-CTA journey | Dead end |
-| Activation | Drives a first meaningful action | Feature dump |
-| Retention | Reinforces habit | One-and-done |
-| Monetization | High-leverage action encouraged | Low-value action dressed as high-value |
+| Next step | Obvious journey after the CTA | Dead end |
+| Activation | Drives a first meaningful action | Feature dump with no path |
+| Retention | Reinforces the habit | One and done |
+| Monetization | High-leverage action encouraged | Low-value ask presented as high-value |
 
-**Weighted lowest, but not least important.** Strategy is usually *inferred*
-rather than directly observed, which is why it carries 15%. Strategic failure
-still triggers caps and gates that suppress the final score.
+It carries the lightest weight because it is the hardest thing to see from one email. When the journey context is not there, this pillar drops out of the scoring rather than guessing, so an unknown never becomes a penalty and nobody has a reason to invent a strategy that was not there.
 
-**It refuses to guess.** When lifecycle stage, sequence position, or segmentation
-can't be inferred, the pillar defaults to **3.0** and records the assumption.
-Fabricating strategic intent to fill a gap is worse than admitting the gap.
+Sending because it is Tuesday is not a strategy. But send frequency and campaign-to-flow balance are questions about a program, and one email cannot answer them.
 
-**Timing beats polish.** A well-timed triggered email earns credit with imperfect
-copy. An untimed blast with excellent copy is penalized. An email that would work
-equally well as batch-and-blast is strategically weak as a triggered send.
+## What the score means
 
----
+The five pillars combine into one number, adjusted for how distinctive the work is and how well it fits the recipient's moment. Every bonus has to name the element that earned it.
 
-## Weights Shift By Email Type
-
-The pillars are fixed; their weights aren't. Behavioral and Strategy *invert*
-depending on what the email is for.
-
-| Pillar | Promotional | Newsletter | Transactional | Lifecycle |
-|---|:---:|:---:|:---:|:---:|
-| Design | 25% | 20% | 20% | 20% |
-| Accessibility | 20% | 15% | **30%** | 20% |
-| Copy | 20% | **30%** | 20% | 20% |
-| Behavioral | 20% | 15% | **10%** | **25%** |
-| Strategy | 15% | 20% | 20% | 15% |
-
-A newsletter lives or dies on voice, so copy carries most. A transactional email
-has already gotten its action — behavioral barely matters and accessibility
-carries most. A lifecycle email exists to move someone, so behavioral peaks.
-Seasonal emails use promotional weights.
-
-## Caps and Gates
-
-Four rules stop a strong average from hiding a fatal flaw:
-
-- **Accessibility cap** — Pillar 2 below 3.0 caps the final at 3.4
-- **Interchangeability cap** — a 0.95 distinctiveness modifier caps the final at 4.2
-- **Gallery gate** — gallery inclusion requires distinctiveness of 1.00 or better
-- **CFO gate** — above 4.5 requires plausible metric impact plus three of six
-  excellence criteria
-
-Caps are why the pillars stay separate. Merge accessibility into design and a
-beautiful, unreadable email averages its way past the gate.
-
-## Score Bands
-
-| Score | Internal band | What a sender sees |
+| Score | Band | Sender-facing tier |
 |---|---|---|
-| 4.7+ | Exceptional | Gallery-Worthy |
-| 4.4 – 4.6 | Elevated | Excellent |
-| 4.1 – 4.3 | Teachable | Strong |
-| 3.8 – 4.0 | Strong | Good |
-| 3.5 – 3.7 | Competent | Fair |
-| 3.0 – 3.4 | Below | Needs Work |
-| Below 3.0 | Reject | Not Ready |
+| 4.5+ | Exceptional | Gallery-Worthy |
+| 4.0 to 4.4 | Teachable | Strong |
+| 3.5 to 3.9 | Competent | Fair |
+| 3.0 to 3.4 | Below | Needs Work |
+| under 3.0 | Reject | Not Ready |
 
-The usable range is roughly 3.0 to 4.8 — a 1.7-point window, which is why tenths
-matter. A 0.1 gap is one real deduction. A 0.3 gap crosses a band and should be
-easy to say out loud.
+Two rules override the arithmetic. An accessibility failure caps the score outright. Work that would survive a competitor's logo never reaches the gallery, however clean the build.
 
----
+Judgment produces the pillar scores and the evidence behind them. Every number after that comes from [`calculate_final.py`](skills/rge-quality-index/scripts/calculate_final.py), so a model never writes its own final score. The exact weights, modifiers, caps and gates are in [`references/scoring.md`](skills/rge-quality-index/references/scoring.md).
 
-## Install
+RGE editors make the real inclusion decisions. Nothing the framework outputs means an email has been accepted.
+
+## Using it
 
 ```bash
 mkdir -p ~/.claude/skills
 cp -R skills/rge-quality-index ~/.claude/skills/
 ```
 
-Then: *"Grade this email against the Quality Index"* · *"Why did this score
-a 3.4?"* · *"Is this Gallery-Worthy or just Good?"*
-
-## What's In Here
-
-```
-skills/rge-quality-index/
-├── SKILL.md                    the five pillars, modifiers, caps, bands
-├── references/
-│   ├── patterns.md             rejection patterns + what pushes past 4.1
-│   ├── industry-context.md     design norms by vertical
-│   └── program-maturity.md     program diagnostics (load only with context)
-└── scripts/
-    └── calculate_final.py      deterministic scorer
-```
-
-Models describe caps accurately in their reasoning and then fail to apply them in
-the arithmetic. The model's job is pillar scores, deductions, and modifier tiers
-with justifications. `calculate_final.py` does the math, enforces every cap in
-order, and clamps — standard library only, no network.
+Then ask for a review: "Grade this email against the Quality Index", or "What should I fix before sending?"
 
 ```bash
-python skills/rge-quality-index/scripts/calculate_final.py scored.json --external
+python skills/rge-quality-index/scripts/calculate_final.py scored.json           # internal object
+python skills/rge-quality-index/scripts/calculate_final.py scored.json --audience=sender
+python -m unittest discover -s skills/rge-quality-index/tests -v
 ```
+
+Use `--audience=sender` for anything a sender sees. It emits qualitative labels only, with no scores or internal reasoning.
+
+Detail lives in [`skills/rge-quality-index/references/`](skills/rge-quality-index/references): the full rubric, scoring math, output contract, worked examples, industry context, cross-pillar patterns, and pipeline guidance. [CHANGELOG.md](CHANGELOG.md) records score-affecting changes, and this version's scores are not comparable to earlier ones.
 
 ## Scope
 
-The framework verifies **mechanics, not sufficiency**. A scored footer means the
-unsubscribe works and is findable — not that the email is CAN-SPAM, CASL, or GDPR
-compliant. Deliverability and ESP configuration are outside the pillars by design.
+QI reviews the email and whatever strategic context you supply. It does not certify legal compliance, inbox placement, ESP configuration, or revenue.
 
 ## License
 
-Framework and documentation: [CC BY 4.0](./LICENSE). `calculate_final.py`: MIT.
-Really Good Emails and "Gallery-Worthy" are trademarks; the license covers the
-framework, not the brand.
+Framework and documentation under [CC BY 4.0](LICENSE), so use and adapt them with credit. `calculate_final.py` is MIT.
