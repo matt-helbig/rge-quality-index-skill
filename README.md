@@ -6,19 +6,13 @@ A five-pillar review framework from [Really Good Emails](https://reallygoodemail
 
 ## How RGE reads an email
 
-**Every review names the lesson.** What should another designer or marketer learn from this email? Name the element, say how it works, say why it repays study. "Beautiful", "on-brand" and "high-converting" are not reasons to feature anything. If there is no defensible lesson, say so instead of inventing one.
+**Every review names the lesson.** What should another designer or marketer learn from this email? Name the element and say how it works. "Beautiful", "on-brand" and "high-converting" are not reasons to feature anything. If there is no defensible lesson, say so instead of inventing one.
 
-**Gallery merit and readiness are separate questions.** An email can be well built and still too ordinary for the gallery. A decline says nothing about whether it should ship. The framework answers both questions on their own terms and never lets one substitute for the other.
+**Gallery merit and readiness are separate questions.** An email can be well built and still too ordinary for the gallery. A decline says nothing about whether it should ship.
 
-**The email is judged against its own job.** A receipt does not need an upsell. A newsletter with forty links may be doing exactly what it should. A password reset can be flawless and still teach nobody anything. Persuasion, urgency and personalization are tools, not requirements.
-
-**Evidence comes first.** Findings are marked observed, inferred, or unverified. A screenshot cannot prove alt text is missing. An anchor tag cannot prove the unsubscribe works. Deductions attach to failures you can point at, so a reviewer's blind spot never becomes the sender's problem.
+**The email is judged against its own job.** A receipt does not need an upsell. A newsletter with forty links may be doing exactly what it should. Persuasion, urgency and personalization are tools, not requirements.
 
 **Distinctiveness belongs to the work, not the brand.** Cover the logo. If the voice, imagery and structure still identify the sender, the execution is ownable. Not recognizing a brand is not evidence that its email is generic, and fame is not evidence that it isn't.
-
-**Legibility and trust are floors.** A clever concept does not buy out unreadable body copy, buttons nobody can tap, or a subject line that fakes a security alert to get opened.
-
-**The model judges, the script calculates.** Pillar scores, evidence and modifiers come from judgment. Every number after that comes from [`calculate_final.py`](skills/rge-quality-index/scripts/calculate_final.py), which enforces the caps and rejects arithmetic that does not reconcile. A model-written final score never reaches the reader.
 
 ## The five pillars
 
@@ -174,6 +168,8 @@ Deductions come in three sizes. Minor is 0.2, notable is 0.3, serious is 0.5. No
 | 3.5 to 3.9 | Competent | Fair |
 | 3.0 to 3.4 | Below | Needs Work |
 | under 3.0 | Reject | Not Ready |
+
+Judgment produces the pillar scores, evidence and modifiers. Every number after that comes from [`calculate_final.py`](skills/rge-quality-index/scripts/calculate_final.py), which enforces the caps and rejects arithmetic that does not reconcile. A model-written final score never reaches the reader.
 
 RGE editors make the real inclusion decisions. Nothing the framework outputs means an email has been accepted.
 
