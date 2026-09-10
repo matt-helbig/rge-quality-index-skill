@@ -116,7 +116,7 @@ Ownable (×1.00) or Forward (×1.05) required for RGE gallery inclusion. Interch
 
 ### CFO Gate — Criteria for 4.5+
 
-**Condition 1: Plausible metric impact.** The email must credibly move at least one business metric: conversion rate, revenue per email, activation rate, retention, AOV, or engagement lift. Requires a testable hypothesis, not proof.
+**Condition 1: Plausible metric impact.** The email must credibly move at least one business metric: conversion rate, revenue per email, activation rate, retention, AOV, or click engagement. Requires a testable hypothesis, not proof. Open rate does not qualify on its own and neither does a vague claim of "engagement"; name the behavior the email is supposed to change.
 
 **Condition 2: At least 3 of these 6 excellence criteria:**
 

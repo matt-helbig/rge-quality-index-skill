@@ -27,6 +27,8 @@ Measures visual structure and scroll control. Design supports the idea — not d
 | **Layout** | Intentional grid, purposeful structure | Cramped, misaligned, inconsistent padding |
 | **Brand cohesion** | Immediately recognizable as this brand | Generic template energy |
 
+**The blur test:** Defocus the render, or step back from it, until individual words stop resolving. What still reads is the hierarchy the email actually has, as opposed to the one it was designed to have. A strong email survives this with its primary message and action still identifiable. An email that dissolves into an even grey field has no focal path, whatever its parts look like at full size. Run the same check at mobile width. This is a repeatable substitute for guessing at "scannable in three seconds", and two reviewers running it should reach the same answer.
+
 **Review benchmarks:** These are starting points for evaluating rendered content, not automatic failures. Judge deviations by readability, hierarchy, purpose, and the target audience. Screenshots without a known viewport do not establish CSS pixel measurements.
 - Body text: ≥16px (baseline, not a bonus)
 - Headings: 22–30px
@@ -74,7 +76,7 @@ Measures visual structure and scroll control. Design supports the idea — not d
 - B2B product screenshots / dashboard visuals as primary hero ("show the product")
 - Interaction feedback that works as progressive enhancement
 
-**Trend elements — the general rule:** A widely-adopted visual treatment is not a distinctive positive on its own. What earns credit is how it combines with hierarchy and whitespace. A treatment used as an accent is positive; the same treatment used as the entire design strategy is neutral-to-negative. Do not infer originality or staleness from a treatment’s name alone.
+**Trend elements — the general rule:** A widely-adopted visual treatment is not a distinctive positive on its own. What earns credit is how it combines with hierarchy and whitespace. A treatment used as an accent is positive; the same treatment used as the entire design strategy is neutral-to-negative. Do not infer originality or staleness from a treatment’s name alone. To judge saturation without keeping a list that goes stale, ask whether you can name several current senders in or near the category using the same treatment. If you can, its presence is not a distinctiveness signal on its own. If you cannot, say which quality makes the execution unusual rather than naming the technique.
 
 **Product photography as hero**: Positive when the image does conceptual work and copy is disciplined. Strong image + weak copy: don't compensate.
 
@@ -101,7 +103,7 @@ Measures execution quality, usability, and inclusiveness. Craft is non-negotiabl
 | **Alt text** | Appropriate by image type, empty on decorative | Missing or generic on everything |
 | **Dark mode** | Backgrounds invert, text legible, element definition preserved | Invisible text, broken backgrounds |
 | **Footer** | Unsub prominent and functional, postal address present | Unsub buried, wall of fine print |
-| **Line height** | Consistent, readable spacing throughout | Overlap or inconsistency across clients |
+| **Line height** | 1.5 or looser on body copy, consistent throughout | Under 1.4 on sustained copy, or overlap across clients |
 | **Animation fallback** | First GIF frame is meaningful and legible | First frame blank or mid-transition |
 
 **Footer scoring is mechanical, not legal.** Inspect the contact and preference controls appropriate to the message's purpose. Record presence, findability, and tested functionality separately. Do not impose promotional footer expectations on every service message or certify compliance. See the scope in [SKILL.md](../SKILL.md).
@@ -201,6 +203,8 @@ Scores what the words say and how they sound. What they make you do is Pillar 4.
 
 **Sender name / from address**: Assess clear identity and consistency with the requested action. Inviting a reply to an address that does not accept replies is a specific contradiction. A brand sender or `noreply` address alone is not a defect; score distinct copy or task failures where supported.
 
+A named human sender is a real warmth signal, and it reads as one because the reader takes it literally. That is also its failure mode: attributing a message to a person who did not write or send it is a trust problem, not a personalization technique, and it gets worse the more the role implies individual attention. Apply −0.3 where the evidence shows the named sender is a fiction. A team, department, or institution name is the honest default when no individual stands behind the message. A `noreply` address is defensible when replying is genuinely not the right channel, but only when the email names the channel that is.
+
 **Subject line judgment:** Evaluate specificity, truthful expectations, audience fit, and the payoff in the email. Casual, formal, curious, and urgent approaches can all work. Do not claim one outperforms another without relevant performance evidence.
 
 **Subject → opener payoff contract**: The first visible sentence in the email should answer or deliver on the subject line's promise. A question in the subject line demands an answer in the opener. An intriguing tease demands a payoff. Evaluating this as a unit — subject line, preheader, and opening sentence as a three-part contract with the reader — is more useful than scoring each element in isolation.
@@ -239,6 +243,8 @@ Apply an appropriate listed deduction only for an observed weakness. Several sty
 **Voice of the customer**: Use the terms the intended audience understands; technical terms such as “export” may be correct for that audience. Score unclear wording in P3. Apply a P5 consequence only when there is separate evidence of audience or task mismatch.
 
 **Fake interactivity**: Quiz-style patterns that simulate choices without delivering real personalization are manipulative. Apply −0.3 when interactive framing is used purely for click tracking with no genuine outcome differentiation.
+
+**Fake empathy**: Sympathy language that performs concern without doing anything with it. The patterns to watch: apologizing when nothing went wrong, claiming to know how the reader feels rather than acknowledging the situation, and asserting a shared struggle the sender is not in. Apply −0.2 when the wording substitutes for the information or action the reader actually needs. Genuine acknowledgement of a difficult situation is not this, and neither is warmth. The failure is the claim to feel something, in place of doing something.
 
 **Deceptive subject lines — trust violation**: Subject lines that mimic transactional or security alerts for promotional purposes (e.g., "Fraud Alert" for a sale extension, "Your account needs attention" for a marketing email) are a severe trust violation. This isn't clever copywriting — it's exploiting anxiety for opens. Beyond the ethical failure, it carries legal risk in some jurisdictions. Apply −0.5 in P3 and flag as a rejection-level concern in P5 (strategic self-harm). Doubling down in the preheader (making both the subject and preheader alarming with no tonal relief) compounds the violation.
 
@@ -318,5 +324,7 @@ Evaluate recipient/task fit and the value of the next step together. Do not requ
 **Preference management**: A visible preference link supports only the claim that a choice is offered. Credit the scope or usefulness of topic, frequency, or format controls when those controls are actually available for inspection.
 
 **Program-level signals**: Campaign-to-flow revenue balance, onboarding sequence length, send cadence discipline, and seasonal calendar ownership are diagnostics for a *program*, not an email. They live in [program-maturity.md](program-maturity.md). Load it only when you actually have that context — a program audit or multi-email teardown. Scoring a single email, fall through to the incomplete-observability default above. Never infer program maturity from one send.
+
+**The recipient may not be the only reader**: Email gets forwarded, and some categories are forwarded as a matter of course. A patient sends results to a family member, a receipt goes to whoever is paying, event details go to whoever is coming, an account notice goes to a partner. Where forwarding is a normal part of the task, judge whether the email survives it: does it still identify the sender and the situation, does a second reader have the context to be useful, and does the action still work for someone who did not trigger it? Score this in P5 as audience fit. Apply a separate P4 deduction only where a forwarded reader demonstrably cannot complete an action the email asks for. Do not deduct for forwarding that the message had no reason to anticipate.
 
 **Data-highlight formats** (year-in-review, usage recaps, progress summaries): Score high on personalization and behavioral leverage when the data earns its place. Key question: is the data genuinely surprising or useful to *this* recipient, or is it filler dressed up as personalization?
