@@ -1,0 +1,93 @@
+{
+  "email_type": "promotional",
+  "industry": "beauty",
+  "pillar_scores": {
+    "design": 3.8,
+    "accessibility": 3.2,
+    "copy": 4.1,
+    "behavioral": 3.4,
+    "strategy": 3.0
+  },
+  "pillar_reasoning": {
+    "design": {
+      "anchor": 4.3,
+      "evidence": "Clear hierarchy and coherent palette",
+      "deductions": [
+        {
+          "rule": "weak-primary-affordance",
+          "value": -0.3,
+          "evidence": "Outline CTA blends into adjacent cards"
+        },
+        {
+          "rule": "misleading-cta-sizes",
+          "value": -0.2,
+          "evidence": "Secondary sizes suggest incorrect priority"
+        }
+      ]
+    },
+    "accessibility": {
+      "anchor": 4.0,
+      "evidence": "Readable live body text and measured contrast",
+      "deductions": [
+        {
+          "rule": "image-only-code",
+          "value": -0.3,
+          "evidence": "Essential offer code appears only in image"
+        },
+        {
+          "rule": "dark-logo-failure",
+          "value": -0.3,
+          "evidence": "Logo illegible in supplied dark-mode render"
+        },
+        {
+          "rule": "generic-alt",
+          "value": -0.2,
+          "evidence": "Informative images labeled image"
+        }
+      ]
+    },
+    "copy": {
+      "anchor": 4.5,
+      "evidence": "Specific, memorable voice",
+      "deductions": [
+        {
+          "rule": "unclear-action",
+          "value": -0.2,
+          "evidence": "Learn More does not identify the destination"
+        },
+        {
+          "rule": "wasted-preheader",
+          "value": -0.2,
+          "evidence": "Preview repeats the subject without useful extension"
+        }
+      ]
+    },
+    "behavioral": {
+      "anchor": 3.6,
+      "evidence": "Clear value proposition with limited decision support",
+      "deductions": [
+        {
+          "rule": "extra-competing-cluster",
+          "value": -0.2,
+          "evidence": "Four independent promotional link clusters"
+        }
+      ]
+    },
+    "strategy": {
+      "anchor": 3.0,
+      "evidence": "No supplied journey context",
+      "deductions": [],
+      "observability_default": true
+    }
+  },
+  "modifiers": {
+    "distinctiveness_tier": "ownable",
+    "lifecycle_coherence": 1.0,
+    "courage_bonus": 0.0,
+    "screenshot_bonus": 0.1,
+    "screenshot_justification": "A specific memorable subject-line moment worth saving"
+  },
+  "all_image": false,
+  "cfo_metric_impact": false,
+  "cfo_criteria_met": 0
+}
