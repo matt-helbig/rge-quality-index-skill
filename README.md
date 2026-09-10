@@ -36,29 +36,72 @@ Each pillar scores 1.0 to 5.0 in tenths. Weights shown are for promotional email
 
 Visual structure and scroll control. Design carries the idea rather than decorating it.
 
-Strong work has a focal path you can follow in about three seconds, rhythm between dense and open sections, a primary CTA nobody has to hunt for, and type chosen on purpose. Depth, high-contrast color, editorial display typography, illustration systems and mobile-specific reflows all earn credit when they serve the message.
+| Signal | Strong | Weak |
+|---|---|---|
+| Hierarchy | Clear focal path, scannable in about three seconds | Wall of content, no entry point |
+| Scroll pacing | Rhythm between dense and open sections | Monotonous blocks |
+| CTA prominence | Primary action unmissable, secondary subordinate | Buried, or competing equally |
+| Typography | Deliberate pairing, readable scale | Inconsistent sizing that hides the hierarchy |
+| Layout | Intentional grid, consistent padding | Cramped, misaligned, arbitrary spacing |
+| Brand cohesion | Recognizable as this sender | Generic template energy |
 
-It costs you when there is no focal path at all, when a primary button disappears among footer utilities, when columns stack in an illogical order, or when content truncates at 320px. Popular treatments are not distinctive by themselves. Rounded corners and heavy gradients used as accents can work; used as the entire design idea they are neutral at best.
+Benchmarks for reviewing a render. These are starting points, not automatic failures.
 
-High-SKU retail density is not a deduction. Judge prioritization, not product count.
+| Element | Baseline |
+|---|---|
+| Body text | 16px and up |
+| Headings | 22 to 30px |
+| Font families | 2 to 3 |
+| CTA buttons | 44 x 44px and up |
+| Email width | 600 to 700px |
+| Total height | Flag over 3000px |
+| File weight | Flag over 1.5MB |
+| Mobile | Logical stacking, nothing truncated at 320px |
+
+Popular treatments are not distinctive by themselves. Rounded corners and heavy gradients work as accents; as the entire design idea they are neutral at best. High-SKU retail density is not a deduction, so judge prioritization rather than product count.
 
 ### 2. Accessibility and technical craft
 
-Execution quality, usability, and whether everyone can actually read the thing. This pillar is where craft becomes non-negotiable.
+Execution quality, usability, and whether everyone can actually read the thing. This is where craft becomes non-negotiable.
 
-It covers measured contrast, body text at 16px and up, tap targets around 44px, alt text matched to image type, dark mode behavior, footer controls, animation fallbacks, merge-tag fallbacks, and Gmail clipping near 102KB.
+| Signal | Strong | Weak |
+|---|---|---|
+| Contrast | Measured text contrast meets AA | Verified low-contrast essential text |
+| Mobile readability | Comfortable at arm's length | Requires zooming |
+| Tap targets | 44 x 44px with room around them | Tiny links, overlapping taps |
+| Alt text | Matched to image type, empty on decorative | Missing, generic, or "IMG_3847.png" |
+| Dark mode | Text legible, element definition preserved | Invisible text, broken backgrounds |
+| Footer | Unsubscribe findable and working | Buried in fine print |
+| Animation | First frame meaningful on its own | Blank or mid-transition |
 
-Alt text is judged as a reading experience, not per image. Read in order alongside the live text, it should make sense out loud. Descriptions that break the argument are either unnecessary, so mark them decorative, or badly written.
+Alt text is judged as a reading experience, not one image at a time. Read in order alongside the live text, it should make sense out loud. A description that breaks the argument is either unnecessary, so mark it decorative, or badly written.
 
-Two rules bite hard. An accessibility score below 3.0 caps the final score at 3.4. An email whose essential message and action exist only inside images cannot score above 2.9 here, which forces that same cap. A legal footer in live text does not exempt it.
+Two rules bite hard.
+
+| Rule | Trigger | Effect |
+|---|---|---|
+| Accessibility cap | This pillar below 3.0 | Final score capped at 3.4 |
+| All-image ceiling | Essential message and action exist only inside images | This pillar capped at 2.9, which forces the 3.4 cap |
+
+A live legal footer does not exempt an all-image email. Gmail clipping near 102KB that hides essential content is a serious deduction.
 
 ### 3. Copy and message discipline
 
 What the words say and how they sound. What they make you do is pillar 4.
 
-Subject line, preheader and opening sentence work as one contract with the reader. A question in the subject needs an answer in the opener. A tease needs a payoff. Strong copy is specific, written from the recipient's side, and recognizable as this brand without the logo.
+| Signal | Strong | Weak |
+|---|---|---|
+| Subject line | Specific, earned urgency | Generic, spammy, misleading |
+| Preheader | Extends the subject | Repeats it, or "View in browser" |
+| Hook | Communicates value immediately | Buried lede |
+| Body copy | Concise, scannable, reader-focused | Verbose, jargon-heavy, feature dumping |
+| CTA text | Clear action and destination | "Click here" with no supporting context |
+| Voice | Recognizable without the logo | Generic corporate |
+| Specificity | Real numbers, named outcomes | Vague promises, filler adjectives |
 
-Clichés, empty urgency, company-focused onboarding and CTAs that hide the destination all cost. Subject lines that imitate transactional or security alerts to lift opens are a trust violation, worth the maximum deduction and a rejection-level flag.
+Subject line, preheader and opening sentence work as one contract with the reader. A question in the subject needs an answer in the opener. A tease needs a payoff.
+
+Subject lines that imitate transactional or security alerts to lift opens are a trust violation, worth the maximum deduction and a rejection-level flag.
 
 Generic copy is scored as a reader problem. Nothing here infers how the copy was produced, and emoji counts prove nothing.
 
@@ -66,7 +109,21 @@ Generic copy is scored as a reader problem. Nothing here infers how the copy was
 
 What the email makes you do. Precision beats intensity.
 
-Strong work names a tension the reader recognizes, removes friction toward one dominant action, answers the objection before it hardens, and sometimes reframes the decision itself. Personalization earns credit by depth: a first name is table stakes, behavioral signal is a real lift, and a recipient-specific data visualization is the top tier when it feels natural rather than clever.
+| Signal | Strong | Weak |
+|---|---|---|
+| Tension | Names a pain the reader recognizes | Generic feature announcement |
+| Friction removal | One dominant action, simplified next step | Multiple equal asks |
+| Objection handling | Addresses the hesitation directly | Ignores why someone would say no |
+| Motivation | Concrete outcome, real constraint | Manufactured urgency |
+| Focus | Everything supports one behavior | Newsletter plus sale plus survey plus referral |
+
+Personalization earns credit by depth.
+
+| Tier | Credit |
+|---|---|
+| First-name substitution | Table stakes, neither adds nor subtracts |
+| Behavioral signal: viewed items, usage data, quiz results | Meaningful lift |
+| Personalized data visualization | High value when the data is genuinely useful to this recipient |
 
 Promotional email gets three link clusters before deductions start. Newsletters are exempt, and product grids count as navigation rather than competing asks.
 
@@ -74,17 +131,41 @@ Button repetition, discount size, emotional exaggeration and countdown timers ar
 
 ### 5. Strategy and monetization intelligence
 
-Whether the email fits where the recipient actually is. Funnel fit, the next step after the click, activation, retention, and whether the ask is worth making.
+Whether the email fits where the recipient actually is.
+
+| Signal | Strong | Weak |
+|---|---|---|
+| Funnel fit | Right for the lifecycle stage | Wrong tone for the moment |
+| Next step | Obvious journey after the CTA | Dead end |
+| Activation | Drives a first meaningful action | Feature dump with no path |
+| Retention | Reinforces the habit | One and done |
+| Monetization | High-leverage action encouraged | Low-value ask presented as high-value |
 
 The weight is 15% because strategy is usually inferred rather than seen. When journey context is genuinely unavailable, this pillar takes a 3.0 default and drops out of the weighted sum entirely, with the remaining four pillars rescaled. Missing context neither helps nor hurts the score, so there is no reason to invent it.
 
-Cadence-driven sends with no angle cap at 3.5. Program-level questions like send frequency and campaign-to-flow balance are diagnostics for a program, never for one email.
+Cadence-driven sends with no angle cap at 3.5. Send frequency and campaign-to-flow balance are diagnostics for a program, never for one email.
 
 ## Scoring
 
-Weighted craft is multiplied by distinctiveness (0.95 interchangeable, 1.00 ownable, 1.05 forward) and lifecycle coherence, then bonuses for commercial courage and screenshot-worthy moments are added. Every non-default modifier needs a justification naming the element that earned it, or it reverts to neutral.
+Weighted craft is multiplied by distinctiveness and lifecycle coherence, then the bonuses are added.
+
+| Modifier | Range | Awarded for |
+|---|---|---|
+| Distinctiveness | x0.95 interchangeable, x1.00 ownable, x1.05 forward | Whether the execution would survive a competitor's logo |
+| Lifecycle coherence | x1.00 to x1.05 | Evidence the email knows where the recipient is |
+| Commercial courage | +0.00 to +0.30 | A deliberate creative or strategic risk |
+| Screenshot worthy | +0.00 to +0.20 | A moment worth saving to a swipe file |
+
+Every non-default modifier needs a justification naming the element that earned it, or it reverts to neutral.
 
 Deductions come in three sizes. Minor is 0.2, notable is 0.3, serious is 0.5. No pillar can lose more than 1.2 in total, because stacking past that means the anchor was set too high.
+
+| Cap or gate | Trigger | Effect |
+|---|---|---|
+| Accessibility cap | Pillar 2 below 3.0 | Final capped at 3.4 |
+| Interchangeability cap | Distinctiveness x0.95 | Final capped at 4.2, and never reaches the gallery |
+| Forward craft floor | Weighted craft below 3.8 | x1.05 downgraded to x1.00 |
+| CFO gate | Score would reach 4.5 | Needs plausible metric impact plus 3 of 6 documented criteria, or clamps to 4.4 |
 
 | Score | Band | Sender-facing tier |
 |---|---|---|
@@ -93,8 +174,6 @@ Deductions come in three sizes. Minor is 0.2, notable is 0.3, serious is 0.5. No
 | 3.5 to 3.9 | Competent | Fair |
 | 3.0 to 3.4 | Below | Needs Work |
 | under 3.0 | Reject | Not Ready |
-
-Reaching 4.5 requires a plausible metric impact plus three of six excellence criteria, each documented. Interchangeable work caps at 4.2 and never reaches the gallery, however clean the craft.
 
 RGE editors make the real inclusion decisions. Nothing the framework outputs means an email has been accepted.
 
