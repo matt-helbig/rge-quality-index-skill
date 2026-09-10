@@ -10,6 +10,8 @@ Read when industry or audience context changes the judgment. Context adjusts how
 
 **Beauty / personal care.** Before-and-after imagery, ingredient explanations, and consultation or quiz-result flows are high-value formats when the claims are understandable and supported. A data-shaped visual is not evidence by itself.
 
+**Public sector, education, and public institutions.** These senders carry regulatory exposure on accessibility that most senders do not, so a failure there has a consequence beyond its score. Note the exposure in P5 rather than inventing an extra deduction for it, and confirm current scope before telling a sender they have a legal problem. QI does not certify compliance.
+
 **Health / wellness / medical.** Favor clarity, sensitivity, and substantiated claims; clinical language should be earned rather than gestured at. Technical vocabulary may be correct for specialist audiences. Accessibility matters more than average here, because the audience is more likely to include disabled readers. Do not certify clinical or legal claims through this rubric.
 
 **Food / beverage.** Sensory imagery, recipes, and ingredient storytelling deliver real value in this category and are worth scoring generously on editorial merit. Animation is optional, and earns credit for its contribution and its fallback rather than for existing.

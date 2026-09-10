@@ -39,6 +39,6 @@ The accessibility cap (3.4) still lands at the top of Below / Needs Work, so cap
 
 ### Structure
 
-`SKILL.md` is now a router. The rubric, scoring formula, output contract, worked examples, industry context, cross-pillar patterns, time-sensitive calibration, and implementation guidance live in `references/`. A loader that sends only `SKILL.md` to a model without file tools must also include `rubric.md`, `scoring.md`, and `output.md` for a full review.
+`SKILL.md` is now a router. The rubric, scoring formula, output contract, worked examples, industry context, cross-pillar patterns, and implementation guidance live in `references/`. A loader that sends only `SKILL.md` to a model without file tools must also include `rubric.md`, `scoring.md`, and `output.md` for a full review.
 
 Guidance that inferred AI authorship from surface features — emoji counts, bullet density, stock phrases — was removed throughout. Generic execution is still scored; it is scored as a reader problem rather than as evidence about how the copy was written.
