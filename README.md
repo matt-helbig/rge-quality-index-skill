@@ -59,7 +59,7 @@ Execution quality, usability, and whether everyone can actually read the thing. 
 
 Alt text is judged as a reading experience, not one image at a time. Read in order alongside the live text, it should make sense out loud. A description that breaks the argument is either unnecessary, so mark it decorative, or badly written.
 
-Two rules bite hard. An accessibility score below 3.0 caps the final score at 3.4. An email whose essential message and action exist only inside images cannot clear 2.9 here, which forces that same cap, and a live legal footer does not exempt it. Separately, Gmail clipping near 102KB that hides essential content is a serious deduction.
+This pillar can veto the whole email. Fail it and the final score is capped no matter how good the rest is. Build the entire message inside images with no live text and you trip that cap automatically, and a live legal footer does not get you out of it.
 
 ### 3. Copy and message discipline
 
@@ -77,7 +77,7 @@ What the words say and how they sound. What they make you do is pillar 4.
 
 Subject line, preheader and opening sentence work as one contract with the reader. A question in the subject needs an answer in the opener. A tease needs a payoff.
 
-Subject lines that imitate transactional or security alerts to lift opens are a trust violation, worth the maximum deduction and a rejection-level flag.
+Subject lines that imitate transactional or security alerts to lift opens are a trust violation. That is the one copy failure that can sink an otherwise strong email on its own.
 
 Generic copy is scored as a reader problem. Nothing here infers how the copy was produced, and emoji counts prove nothing.
 
@@ -95,7 +95,7 @@ What the email makes you do. Precision beats intensity.
 
 Personalization earns credit by depth. A first name is table stakes and moves nothing. Behavioral signal, meaning viewed items, usage data or quiz results, is a real lift. A personalized data visualization is the top tier when the data is genuinely useful to this recipient.
 
-Promotional email gets three link clusters before deductions start. Newsletters are exempt, and product grids count as navigation rather than competing asks.
+A promotional email gets about three link clusters before it starts costing. Newsletters are exempt, because the links are the point, and product grids count as navigation rather than competing asks.
 
 Button repetition, discount size, emotional exaggeration and countdown timers are not leverage.
 
@@ -111,17 +111,13 @@ Whether the email fits where the recipient actually is.
 | Retention | Reinforces the habit | One and done |
 | Monetization | High-leverage action encouraged | Low-value ask presented as high-value |
 
-The weight is 15% because strategy is usually inferred rather than seen. When journey context is genuinely unavailable, this pillar takes a 3.0 default and drops out of the weighted sum entirely, with the remaining four pillars rescaled. Missing context neither helps nor hurts the score, so there is no reason to invent it.
+It carries the lightest weight because it is the hardest thing to see from one email. When the journey context is not there, this pillar drops out of the scoring rather than guessing, so an unknown never becomes a penalty and nobody has a reason to invent a strategy that was not there.
 
-Cadence-driven sends with no angle cap at 3.5. Send frequency and campaign-to-flow balance are diagnostics for a program, never for one email.
+Sending because it is Tuesday is not a strategy. But send frequency and campaign-to-flow balance are questions about a program, and one email cannot answer them.
 
-## Scoring
+## What the score means
 
-Weighted craft is multiplied by distinctiveness (0.95 interchangeable, 1.00 ownable, 1.05 forward) and lifecycle coherence (1.00 to 1.05), then bonuses are added for commercial courage, up to 0.30, and a screenshot-worthy moment, up to 0.20. Every non-default modifier needs a justification naming the element that earned it, or it reverts to neutral.
-
-Deductions come in three sizes. Minor is 0.2, notable is 0.3, serious is 0.5. No pillar can lose more than 1.2 in total, because stacking past that means the anchor was set too high.
-
-Four rules override the arithmetic. Accessibility below 3.0 caps the final at 3.4. Interchangeable work caps at 4.2 and never reaches the gallery, however clean the craft. A forward tier sitting on weighted craft below 3.8 is downgraded to ownable. Reaching 4.5 needs a plausible metric impact plus three of six excellence criteria, each documented, or the score clamps to 4.4.
+The five pillars combine into one number, adjusted for how distinctive the work is and how well it fits the recipient's moment. Every bonus has to name the element that earned it.
 
 | Score | Band | Sender-facing tier |
 |---|---|---|
@@ -131,7 +127,9 @@ Four rules override the arithmetic. Accessibility below 3.0 caps the final at 3.
 | 3.0 to 3.4 | Below | Needs Work |
 | under 3.0 | Reject | Not Ready |
 
-Judgment produces the pillar scores, evidence and modifiers. Every number after that comes from [`calculate_final.py`](skills/rge-quality-index/scripts/calculate_final.py), which enforces the caps and rejects arithmetic that does not reconcile. A model-written final score never reaches the reader.
+Two rules override the arithmetic. An accessibility failure caps the score outright. Work that would survive a competitor's logo never reaches the gallery, however clean the build.
+
+Judgment produces the pillar scores and the evidence behind them. Every number after that comes from [`calculate_final.py`](skills/rge-quality-index/scripts/calculate_final.py), so a model never writes its own final score. The exact weights, modifiers, caps and gates are in [`references/scoring.md`](skills/rge-quality-index/references/scoring.md).
 
 RGE editors make the real inclusion decisions. Nothing the framework outputs means an email has been accepted.
 
