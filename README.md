@@ -39,18 +39,7 @@ Visual structure and scroll control. Design carries the idea rather than decorat
 | Layout | Intentional grid, consistent padding | Cramped, misaligned, arbitrary spacing |
 | Brand cohesion | Recognizable as this sender | Generic template energy |
 
-Benchmarks for reviewing a render. These are starting points, not automatic failures.
-
-| Element | Baseline |
-|---|---|
-| Body text | 16px and up |
-| Headings | 22 to 30px |
-| Font families | 2 to 3 |
-| CTA buttons | 44 x 44px and up |
-| Email width | 600 to 700px |
-| Total height | Flag over 3000px |
-| File weight | Flag over 1.5MB |
-| Mobile | Logical stacking, nothing truncated at 320px |
+Benchmarks for reviewing a render, as starting points rather than automatic failures: body text 16px and up, headings 22 to 30px, two or three font families, tap targets 44 x 44px, width 600 to 700px. Flag anything taller than 3000px or heavier than 1.5MB. Mobile should stack logically with nothing truncated at 320px.
 
 Popular treatments are not distinctive by themselves. Rounded corners and heavy gradients work as accents; as the entire design idea they are neutral at best. High-SKU retail density is not a deduction, so judge prioritization rather than product count.
 
@@ -70,14 +59,7 @@ Execution quality, usability, and whether everyone can actually read the thing. 
 
 Alt text is judged as a reading experience, not one image at a time. Read in order alongside the live text, it should make sense out loud. A description that breaks the argument is either unnecessary, so mark it decorative, or badly written.
 
-Two rules bite hard.
-
-| Rule | Trigger | Effect |
-|---|---|---|
-| Accessibility cap | This pillar below 3.0 | Final score capped at 3.4 |
-| All-image ceiling | Essential message and action exist only inside images | This pillar capped at 2.9, which forces the 3.4 cap |
-
-A live legal footer does not exempt an all-image email. Gmail clipping near 102KB that hides essential content is a serious deduction.
+Two rules bite hard. An accessibility score below 3.0 caps the final score at 3.4. An email whose essential message and action exist only inside images cannot clear 2.9 here, which forces that same cap, and a live legal footer does not exempt it. Separately, Gmail clipping near 102KB that hides essential content is a serious deduction.
 
 ### 3. Copy and message discipline
 
@@ -111,13 +93,7 @@ What the email makes you do. Precision beats intensity.
 | Motivation | Concrete outcome, real constraint | Manufactured urgency |
 | Focus | Everything supports one behavior | Newsletter plus sale plus survey plus referral |
 
-Personalization earns credit by depth.
-
-| Tier | Credit |
-|---|---|
-| First-name substitution | Table stakes, neither adds nor subtracts |
-| Behavioral signal: viewed items, usage data, quiz results | Meaningful lift |
-| Personalized data visualization | High value when the data is genuinely useful to this recipient |
+Personalization earns credit by depth. A first name is table stakes and moves nothing. Behavioral signal, meaning viewed items, usage data or quiz results, is a real lift. A personalized data visualization is the top tier when the data is genuinely useful to this recipient.
 
 Promotional email gets three link clusters before deductions start. Newsletters are exempt, and product grids count as navigation rather than competing asks.
 
@@ -141,25 +117,11 @@ Cadence-driven sends with no angle cap at 3.5. Send frequency and campaign-to-fl
 
 ## Scoring
 
-Weighted craft is multiplied by distinctiveness and lifecycle coherence, then the bonuses are added.
-
-| Modifier | Range | Awarded for |
-|---|---|---|
-| Distinctiveness | x0.95 interchangeable, x1.00 ownable, x1.05 forward | Whether the execution would survive a competitor's logo |
-| Lifecycle coherence | x1.00 to x1.05 | Evidence the email knows where the recipient is |
-| Commercial courage | +0.00 to +0.30 | A deliberate creative or strategic risk |
-| Screenshot worthy | +0.00 to +0.20 | A moment worth saving to a swipe file |
-
-Every non-default modifier needs a justification naming the element that earned it, or it reverts to neutral.
+Weighted craft is multiplied by distinctiveness (0.95 interchangeable, 1.00 ownable, 1.05 forward) and lifecycle coherence (1.00 to 1.05), then bonuses are added for commercial courage, up to 0.30, and a screenshot-worthy moment, up to 0.20. Every non-default modifier needs a justification naming the element that earned it, or it reverts to neutral.
 
 Deductions come in three sizes. Minor is 0.2, notable is 0.3, serious is 0.5. No pillar can lose more than 1.2 in total, because stacking past that means the anchor was set too high.
 
-| Cap or gate | Trigger | Effect |
-|---|---|---|
-| Accessibility cap | Pillar 2 below 3.0 | Final capped at 3.4 |
-| Interchangeability cap | Distinctiveness x0.95 | Final capped at 4.2, and never reaches the gallery |
-| Forward craft floor | Weighted craft below 3.8 | x1.05 downgraded to x1.00 |
-| CFO gate | Score would reach 4.5 | Needs plausible metric impact plus 3 of 6 documented criteria, or clamps to 4.4 |
+Four rules override the arithmetic. Accessibility below 3.0 caps the final at 3.4. Interchangeable work caps at 4.2 and never reaches the gallery, however clean the craft. A forward tier sitting on weighted craft below 3.8 is downgraded to ownable. Reaching 4.5 needs a plausible metric impact plus three of six excellence criteria, each documented, or the score clamps to 4.4.
 
 | Score | Band | Sender-facing tier |
 |---|---|---|
