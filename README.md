@@ -2,91 +2,115 @@
 
 **Not just pretty. Persuasive.**
 
-A five-pillar review framework from [Really Good Emails](https://reallygoodemails.com), packaged as an agent skill. It decides whether an email is worth featuring in the gallery, and tells a sender what to fix.
+Most email feedback lands in one of two piles. "Looks great, ship it." Or a wall of nitpicks about a button nobody was going to click anyway.
 
-## How RGE reads an email
+This is what we use instead. Five pillars, real numbers, and one rule that keeps everybody honest: every review has to say what you'd actually learn from the email.
 
-**Every review names the lesson.** What should another designer or marketer learn from this email? Name the element, say how it works, say why it repays study. "Beautiful", "on-brand" and "high-converting" are not reasons to feature anything. If there is no defensible lesson, say so instead of inventing one.
+It's packaged as an agent skill, so you can point a model at an email and get the same review we'd give it.
 
-**Gallery merit and readiness are separate questions.** An email can be well built and still too ordinary for the gallery. A decline says nothing about whether it should ship. The framework answers both questions on their own terms and never lets one substitute for the other.
+## How we read an email
 
-**The email is judged against its own job.** A receipt does not need an upsell. A newsletter with forty links may be doing exactly what it should. A password reset can be flawless and still teach nobody anything. Persuasion, urgency and personalization are tools, not requirements.
+**Every review earns its lesson.**
 
-**Evidence comes first.** Findings are marked observed, inferred, or unverified. A screenshot cannot prove alt text is missing. An anchor tag cannot prove the unsubscribe works. Deductions attach to failures you can point at, so a reviewer's blind spot never becomes the sender's problem.
+What would another designer steal from this? Name it. Say how it works. "Looks great" is not a reason to feature something, and neither is "the brand is famous." No lesson, no feature. We'd rather say that out loud than invent one.
 
-**Distinctiveness belongs to the work, not the brand.** Cover the logo. If the voice, imagery and structure still identify the sender, the execution is ownable. Not recognizing a brand is not evidence that its email is generic, and fame is not evidence that it isn't.
+**Gallery merit and "should you send this" are different questions.**
 
-**Legibility and trust are floors.** A clever concept does not buy out unreadable body copy, buttons nobody can tap, or a subject line that fakes a security alert to get opened.
+Plenty of good email never makes the gallery. That's not an insult. It means the email did its job without teaching anybody anything new. We score those separately, so a decline never reads as "your email is broken."
 
-**The model judges, the script calculates.** Pillar scores, evidence and modifiers come from judgment. Every number after that comes from [`calculate_final.py`](skills/rge-quality-index/scripts/calculate_final.py), which enforces the caps and rejects arithmetic that does not reconcile. A model-written final score never reaches the reader.
+**Every email gets judged on its own job.**
+
+A receipt doesn't need an upsell. A newsletter can have a hundred links and be working perfectly. A password reset can be flawless and still teach nobody anything. Urgency, persuasion, and personalization are tools, not homework.
+
+**We only deduct for what we can see.**
+
+Findings get marked observed, inferred, or unverified. A screenshot can't tell you alt text is missing. An anchor tag can't prove the unsubscribe works. If we didn't see it, it doesn't cost you. Our blind spot is not your problem.
+
+**Distinctiveness is about the work, not the logo.**
+
+Cover the logo. If the voice, the imagery, and the structure still say who sent it, that's ownable. Not recognizing a brand doesn't make its email generic. Being famous doesn't make it good.
+
+**Legibility and trust are the floor.**
+
+A clever concept doesn't buy you unreadable body copy, buttons nobody can tap, or a subject line faking a security alert to steal an open. Cool idea. Still no.
+
+**The model judges. The script does the math.**
+
+Scores, evidence, and modifiers come from judgment. Every number after that comes from [`calculate_final.py`](skills/rge-quality-index/scripts/calculate_final.py), which enforces the caps and throws out arithmetic that doesn't add up. No model gets to write its own final score. They always round up.
 
 ## The five pillars
 
-Each pillar scores 1.0 to 5.0 in tenths. Weights shown are for promotional email and shift by type.
+Each one scores 1.0 to 5.0 in tenths. Weights below are for promotional email and shift by type.
 
 | Pillar | Weight | The question |
 |---|---:|---|
-| Design and hierarchy | 25% | Is the message organized and readable? |
-| Accessibility and technical craft | 20% | Can recipients reach the content and finish the task? |
-| Copy and message discipline | 20% | Are the words clear, specific and appropriate? |
-| Behavioral leverage | 20% | Does the email support its intended outcome? |
-| Strategy and monetization intelligence | 15% | Does it fit the recipient's situation? |
+| Design and hierarchy | 25% | Can someone follow this? |
+| Accessibility and technical craft | 20% | Can everyone read it, and does it work? |
+| Copy and message discipline | 20% | Do the words earn their space? |
+| Behavioral leverage | 20% | Does it move anybody? |
+| Strategy and monetization intelligence | 15% | Does it fit where the reader actually is? |
 
 ### 1. Design and hierarchy
 
-Visual structure and scroll control. Design carries the idea rather than decorating it.
+Strong work gives you a focal path you can trace in about three seconds. Rhythm between the dense parts and the breathing room. One CTA you can't miss. Type somebody actually chose.
 
-Strong work has a focal path you can follow in about three seconds, rhythm between dense and open sections, a primary CTA nobody has to hunt for, and type chosen on purpose. Depth, high-contrast color, editorial display typography, illustration systems and mobile-specific reflows all earn credit when they serve the message.
+Depth, high contrast, editorial display type, illustration systems, and mobile reflows all earn credit when they serve the message.
 
-It costs you when there is no focal path at all, when a primary button disappears among footer utilities, when columns stack in an illogical order, or when content truncates at 320px. Popular treatments are not distinctive by themselves. Rounded corners and heavy gradients used as accents can work; used as the entire design idea they are neutral at best.
+It costs you when there's no focal path at all. When the primary button drowns in the footer next to the unsubscribe. When columns stack in an order nobody meant. When things get cut off at 320px.
 
-High-SKU retail density is not a deduction. Judge prioritization, not product count.
+Popular is not the same as distinctive. Rounded corners and a gradient as accents, fine. Rounded corners and a gradient as the whole idea is a template with better lighting.
+
+Retail density is not a deduction. Forty products with a clear priority beats six with none.
 
 ### 2. Accessibility and technical craft
 
-Execution quality, usability, and whether everyone can actually read the thing. This pillar is where craft becomes non-negotiable.
+Contrast you can measure. Body text at 16px and up. Tap targets around 44px. Alt text matched to what the image is doing. Dark mode. Footer controls that work. A first GIF frame that says something. Merge tags that don't render "Hi ,". Gmail clipping at roughly 102KB.
 
-It covers measured contrast, body text at 16px and up, tap targets around 44px, alt text matched to image type, dark mode behavior, footer controls, animation fallbacks, merge-tag fallbacks, and Gmail clipping near 102KB.
+Alt text gets read as a sequence, not one image at a time. Play it back in order alongside the live text. Does it sound like a person reading you the email, or a filing cabinet? If a description breaks the story, it's either decorative or badly written.
 
-Alt text is judged as a reading experience, not per image. Read in order alongside the live text, it should make sense out loud. Descriptions that break the argument are either unnecessary, so mark them decorative, or badly written.
-
-Two rules bite hard. An accessibility score below 3.0 caps the final score at 3.4. An email whose essential message and action exist only inside images cannot score above 2.9 here, which forces that same cap. A legal footer in live text does not exempt it.
+Two rules hit hard. Score below 3.0 and the whole email caps at 3.4. Build the entire message inside images with no live text and this pillar can't clear 2.9, which trips that same cap. A live legal footer doesn't count. Nice try.
 
 ### 3. Copy and message discipline
 
-What the words say and how they sound. What they make you do is pillar 4.
+What the words say. What they make you do is pillar 4.
 
-Subject line, preheader and opening sentence work as one contract with the reader. A question in the subject needs an answer in the opener. A tease needs a payoff. Strong copy is specific, written from the recipient's side, and recognizable as this brand without the logo.
+Subject line, preheader, and first sentence are one promise. Ask a question in the subject, answer it in the opener. Tease something, pay it off. Break that and the reader learns not to trust the next one.
 
-Clichés, empty urgency, company-focused onboarding and CTAs that hide the destination all cost. Subject lines that imitate transactional or security alerts to lift opens are a trust violation, worth the maximum deduction and a rejection-level flag.
+Clichés cost. So does fake urgency, onboarding copy that's all about your mission, and a CTA that won't say where it goes.
 
-Generic copy is scored as a reader problem. Nothing here infers how the copy was produced, and emoji counts prove nothing.
+Then there's the one that isn't a craft problem. Subject lines dressed as security alerts or shipping notices to steal an open. Maximum deduction, flagged for rejection. Tricking somebody into opening is not a win.
+
+Generic copy gets scored as a reader problem. We don't guess how it got written, and counting emoji proves nothing.
 
 ### 4. Behavioral leverage
 
-What the email makes you do. Precision beats intensity.
+Precision beats volume.
 
-Strong work names a tension the reader recognizes, removes friction toward one dominant action, answers the objection before it hardens, and sometimes reframes the decision itself. Personalization earns credit by depth: a first name is table stakes, behavioral signal is a real lift, and a recipient-specific data visualization is the top tier when it feels natural rather than clever.
+Strong work names a tension the reader recognizes. Clears the path to one action. Answers the objection before it hardens. Sometimes it changes how you think about the decision entirely.
 
-Promotional email gets three link clusters before deductions start. Newsletters are exempt, and product grids count as navigation rather than competing asks.
+Personalization scores by depth. A first name is table stakes. Real behavioral signal is a lift. A recipient-specific data viz that lands as natural instead of creepy sits at the top.
 
-Button repetition, discount size, emotional exaggeration and countdown timers are not leverage.
+Promotional email gets three link clusters before deductions start. Newsletters are exempt, because the links are the product. Product grids count as browsing, not competing asks.
+
+None of this is leverage: more buttons, a bigger discount, more exclamation points, a countdown to a deadline that doesn't exist.
 
 ### 5. Strategy and monetization intelligence
 
-Whether the email fits where the recipient actually is. Funnel fit, the next step after the click, activation, retention, and whether the ask is worth making.
+Funnel fit. What happens after the click. Activation, retention, and whether the ask was worth making.
 
-The weight is 15% because strategy is usually inferred rather than seen. When journey context is genuinely unavailable, this pillar takes a 3.0 default and drops out of the weighted sum entirely, with the remaining four pillars rescaled. Missing context neither helps nor hurts the score, so there is no reason to invent it.
+It's only 15% because you usually can't see it. When journey context isn't available, this pillar takes a 3.0 and then drops out of the math entirely, with the other four rescaled to cover it. Missing context can't help you or hurt you. Which means there's no reason to make something up, which is exactly why we built it that way.
 
-Cadence-driven sends with no angle cap at 3.5. Program-level questions like send frequency and campaign-to-flow balance are diagnostics for a program, never for one email.
+"Because it's Tuesday" is not a strategy. Cadence sends with no angle cap at 3.5. Send frequency and campaign-to-flow balance are program questions, and one email can't answer them.
 
-## Scoring
+## The math
 
-Weighted craft is multiplied by distinctiveness (0.95 interchangeable, 1.00 ownable, 1.05 forward) and lifecycle coherence, then bonuses for commercial courage and screenshot-worthy moments are added. Every non-default modifier needs a justification naming the element that earned it, or it reverts to neutral.
+Weighted craft, times distinctiveness (0.95 interchangeable, 1.00 ownable, 1.05 forward), times lifecycle coherence. Then add bonuses for commercial courage and screenshot-worthy moments.
 
-Deductions come in three sizes. Minor is 0.2, notable is 0.3, serious is 0.5. No pillar can lose more than 1.2 in total, because stacking past that means the anchor was set too high.
+Every non-default modifier has to name the element that earned it. No justification, back to neutral. Bonuses are for things you can point at.
 
-| Score | Band | Sender-facing tier |
+Deductions come in three sizes: 0.2 minor, 0.3 notable, 0.5 serious. No pillar drops more than 1.2 total. Stacking past that means the problem is your anchor, not the email.
+
+| Score | Band | What the sender sees |
 |---|---|---|
 | 4.5+ | Exceptional | Gallery-Worthy |
 | 4.0 to 4.4 | Teachable | Strong |
@@ -94,33 +118,33 @@ Deductions come in three sizes. Minor is 0.2, notable is 0.3, serious is 0.5. No
 | 3.0 to 3.4 | Below | Needs Work |
 | under 3.0 | Reject | Not Ready |
 
-Reaching 4.5 requires a plausible metric impact plus three of six excellence criteria, each documented. Interchangeable work caps at 4.2 and never reaches the gallery, however clean the craft.
+Clearing 4.5 takes a plausible metric impact plus three of six excellence criteria, each one documented. Interchangeable work caps at 4.2 and never reaches the gallery, no matter how clean the build.
 
-RGE editors make the real inclusion decisions. Nothing the framework outputs means an email has been accepted.
+Our editors still make the actual call. Nothing in here means an email got in.
 
-## Using it
+## Try it
 
 ```bash
 mkdir -p ~/.claude/skills
 cp -R skills/rge-quality-index ~/.claude/skills/
 ```
 
-Then ask for a review: "Grade this email against the Quality Index", or "What should I fix before sending?"
+Then just ask. "Grade this against the Quality Index." "What should I fix before I send it?"
 
 ```bash
-python skills/rge-quality-index/scripts/calculate_final.py scored.json           # internal object
+python skills/rge-quality-index/scripts/calculate_final.py scored.json
 python skills/rge-quality-index/scripts/calculate_final.py scored.json --audience=sender
 python -m unittest discover -s skills/rge-quality-index/tests -v
 ```
 
-Use `--audience=sender` for anything a sender sees. It emits qualitative labels only, with no scores or internal reasoning.
+Use `--audience=sender` for anything a sender reads. Labels only, no internal math. Nobody needs to see the anchor you started from.
 
-Detail lives in [`skills/rge-quality-index/references/`](skills/rge-quality-index/references): the full rubric, scoring math, output contract, worked examples, industry context, cross-pillar patterns, and pipeline guidance. [CHANGELOG.md](CHANGELOG.md) records score-affecting changes, and this version's scores are not comparable to earlier ones.
+The full rubric, scoring math, output contract, worked examples, industry notes, and pipeline guidance live in [`references/`](skills/rge-quality-index/references). [CHANGELOG.md](CHANGELOG.md) tracks anything that moves a score, and this version's numbers don't line up with older ones.
 
-## Scope
+## What this doesn't do
 
-QI reviews the email and whatever strategic context you supply. It does not certify legal compliance, inbox placement, ESP configuration, or revenue.
+QI reviews the email and whatever context you hand it. It won't tell you whether you're legally compliant, whether you'll land in the inbox, whether your ESP is configured right, or what you'll make. Real questions. Just not this tool's job.
 
 ## License
 
-Framework and documentation under [CC BY 4.0](LICENSE). `calculate_final.py` under MIT. Really Good Emails and "Gallery-Worthy" are trademarks; the license covers the framework, not the brand.
+Framework and docs under [CC BY 4.0](LICENSE). `calculate_final.py` under MIT. Really Good Emails and "Gallery-Worthy" are trademarks, so the license covers the framework, not the brand.
